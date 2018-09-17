@@ -74,7 +74,8 @@
     <main class="app-content py-4">
         <div class="container">
          {!! Breadcrumbs::render() !!}
-         @include('layouts.elements.flash')
+         {{--@include('layouts.elements.flash')--}}
+         @include('flash::message')
          @yield('content')
         </div>
     </main>

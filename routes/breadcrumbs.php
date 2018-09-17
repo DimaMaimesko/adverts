@@ -17,10 +17,10 @@ $crumbs->parent('home');
 
 Breadcrumbs::register('password.request', function (Crumbs $crumbs) {
     $crumbs->parent('login');
-$crumbs->push('Reset Password', route('password.request'));
+    $crumbs->push('Reset Password', route('password.request'));
 });
 
 Breadcrumbs::register('password.reset', function (Crumbs $crumbs) {
     $crumbs->parent('password.request');
-$crumbs->push('Change', route('password.reset'));
+    $crumbs->push('Change', route('password.reset'));
 });

@@ -8,3 +8,5 @@
 require('./bootstrap');
 
 
+$('#flash-overlay-modal').modal();
+
