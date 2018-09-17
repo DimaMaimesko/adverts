@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,12 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
+<body id="app">
+    <header>
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-
+                    {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -69,10 +69,23 @@
                 </div>
             </div>
         </nav>
+    </header>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <main class="app-content py-4">
+        <div class="container">
+         {!! Breadcrumbs::render() !!}
+         @include('layouts.elements.flash')
+         @yield('content')
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="border-top pt-3">
+                <p>&copy; {{ date('Y') }} - Adverts</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
