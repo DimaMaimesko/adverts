@@ -24,9 +24,6 @@ class HomeController extends Controller
     public function index()
     {
 
-    flash()->overlay('Welcome Aboard!', 'Modal Title');
-    flash('Message')->important();
-    flash('Message')->error()->important();
         return view('home');
 
     }
