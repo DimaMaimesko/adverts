@@ -5,7 +5,7 @@
 
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary mr-1">Edit</a>
-        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="mr-1">
+        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" data-confirm="Do you want to delete user {{$user->name}}?" class="mr-1">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger">Delete</button>
@@ -36,4 +36,10 @@
             </tr>
         </tbody>
     </table>
+@endsection
+
+@section('scripts')
+    <script>
+
+    </script>
 @endsection

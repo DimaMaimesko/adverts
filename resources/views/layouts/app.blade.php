@@ -92,5 +92,8 @@
         </div>
     </footer>
 
+    {{--Scripts--}}
+    @yield('scripts')
+
 </body>
 </html>

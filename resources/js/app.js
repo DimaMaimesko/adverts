@@ -9,6 +9,12 @@ require('./bootstrap');
 
 
 $('#flash-overlay-modal').modal();
+
 $('#adminTab a').on('click', function (e) {
     $(this).tab('show')
 })
+
+$("[data-confirm]").click(function() {
+    return confirm($(this).attr('data-confirm'));
+});
+
