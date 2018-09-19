@@ -4,7 +4,16 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $email_verified_at
+ * @property string $password
+ * @property string $remember_token
+ * @property string $verify_token
+ * @property string $status
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -20,5 +29,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isWait(){
+        if ($this->status == self::STATUS_WAIT)
+            return true;
+        return false;
+    }
+
+    public function isActive(){
+        if ($this->status == self::STATUS_ACTIVE)
+            return true;
+        return false;
+    }
 
 }

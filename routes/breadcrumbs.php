@@ -28,3 +28,24 @@ Breadcrumbs::register('password.reset', function ($crumbs) {
     $crumbs->parent('password.request');
     $crumbs->push('Change', route('password.reset'));
 });
+// Users
+
+Breadcrumbs::register('admin.users.index', function ($crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Users', route('admin.users.index'));
+});
+
+Breadcrumbs::register('admin.users.create', function ($crumbs) {
+    $crumbs->parent('admin.users.index');
+    $crumbs->push('Create', route('admin.users.create'));
+});
+
+Breadcrumbs::register('admin.users.show', function ($crumbs, $user) {
+    $crumbs->parent('admin.users.index');
+    $crumbs->push($user->name, route('admin.users.show', $user));
+});
+
+Breadcrumbs::register('admin.users.edit', function ($crumbs, $user) {
+    $crumbs->parent('admin.users.show', $user);
+    $crumbs->push('Edit', route('admin.users.edit', $user));
+});

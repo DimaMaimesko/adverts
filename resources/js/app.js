@@ -9,4 +9,6 @@ require('./bootstrap');
 
 
 $('#flash-overlay-modal').modal();
-
+$('#adminTab a').on('click', function (e) {
+    $(this).tab('show')
+})
