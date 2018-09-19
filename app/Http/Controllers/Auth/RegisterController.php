@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
-use DateTime;
+
 class RegisterController extends Controller
 {
 
@@ -59,11 +59,12 @@ class RegisterController extends Controller
         if ((isset($user)) && ($user->status === User::STATUS_WAIT)){
             $user->status = User::STATUS_ACTIVE;
             $user->email_verified_at = now();
+            $user->veify_token = null;
             $user->save();
             $this->guard()->login($user);
             return view('home')->with('success','Your Email is verified!');
         }else{
-            return redirect()->route('login')->with('error','Error!');
+            return redirect()->route('login')->with('error','Sorry, your linc cannot be identified !');
         }
     }
 }

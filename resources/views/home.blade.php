@@ -1,4 +1,7 @@
 @extends('layouts.app')
+{{--опустошили хлебную крошку для главной страницы--}}
+@section ('breadcrumbs')
+@endsection
 
 @section('content')
 <div class="container">

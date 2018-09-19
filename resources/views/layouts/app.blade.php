@@ -73,7 +73,11 @@
 
     <main class="app-content py-4">
         <div class="container">
-         {!! Breadcrumbs::render() !!}
+         @if(Breadcrumbs::exists())
+           @section('breadcrumbs')
+              {!! Breadcrumbs::render() !!}
+           @show
+         @endif
          @include('layouts.elements.flash')
          @include('flash::message')
          @yield('content')
