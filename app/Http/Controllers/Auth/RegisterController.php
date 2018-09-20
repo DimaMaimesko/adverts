@@ -59,12 +59,12 @@ class RegisterController extends Controller
         if ((isset($user)) && ($user->status === User::STATUS_WAIT)){
             $user->status = User::STATUS_ACTIVE;
             $user->email_verified_at = now();
-            $user->veify_token = null;
+            $user->verify_token = null;
             $user->save();
             $this->guard()->login($user);
             return view('home')->with('success','Your Email is verified!');
         }else{
-            return redirect()->route('login')->with('error','Sorry, your linc cannot be identified !');
+            return redirect()->route('login')->with('error','Sorry, your link cannot be identified !');
         }
     }
 }
