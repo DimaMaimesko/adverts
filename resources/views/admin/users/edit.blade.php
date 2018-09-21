@@ -3,40 +3,37 @@
 @section('content')
     @include('admin.users._nav')
 
-    <form method="POST" action="{{ route('admin.users.update', $user) }}">
-        @csrf
-        @method('PUT')
-
+    {!! Form::open(['url' => route('admin.users.update',['user'=> $user]),'method'=>'PUT','data-parsley-validate','autocomplete'=>'off']) !!}
+    <div class="form-group">
+        <label for="userCreateName">Username</label>
+        {!! Form::text('name',$user->name,['class'=>'form-control','placeholder'=>'Username','required','id'=>'userCreateName']) !!}
+    </div>
+    <div class="form-group">
+        <label for="userCreateEmail">Email address</label>
+        {!! Form::email('email',$user->email,['class'=>'form-control','placeholder'=>'Email','required','id'=>'userCreateEmail']) !!}
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    @if(auth()->user()->hasPermissionTo('set roles'))
         <div class="form-group">
-            <label for="name" class="col-form-label">Name</label>
-            <input id="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name', $user->name) }}" required>
-            @if ($errors->has('name'))
-                <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
-            @endif
+            <label for="userCreateRole">Role</label>
+            {!! Form::select('roles[]',$roles, $user->roles()->pluck('id'),['class'=>'form-control','placeholder'=>'Role','required','id'=>'userCreateRole']) !!}
         </div>
+    @endif
+    <div class="form-group">
+        <label for="userCreatePassword">Password</label>
+        {!! Form::password('password',['class'=>'form-control','placeholder'=>'Password','id'=>'userCreatePassword']) !!}
 
-        <div class="form-group">
-            <label for="email" class="col-form-label">E-Mail Address</label>
-            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email', $user->email) }}" required>
-            @if ($errors->has('email'))
-                <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span>
-            @endif
+    </div>
+    {{--<div class="checkbox">--}}
+        {{--{{ Form::hidden('status', 0) }}--}}
+        {{--<label> Status:--}}
+            {{--<input type="checkbox" data-toggle="toggle" data-on="active" data-off="wait"  @if($user->status) checked="checked" @endif name="status" type="checkbox" value="1">--}}
+        {{--</label>--}}
+    {{--</div>--}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-success text-uppercase"><i class="fa fa-save"></i> Submit</button>
         </div>
-
-        {{--<div class="form-group">--}}
-            {{--<label for="status" class="col-form-label">Status</label>--}}
-            {{--<select id="status" class="form-control{{ $errors->has('status') ? ' is-invalid' : '' }}" name="status">--}}
-                {{--@foreach ($statuses as $value => $label)--}}
-                    {{--<option value="{{ $value }}"{{ $value === old('status', $user->status) ? ' selected' : '' }}>{{ $label }}</option>--}}
-                {{--@endforeach;--}}
-            {{--</select>--}}
-            {{--@if ($errors->has('status'))--}}
-                {{--<span class="invalid-feedback"><strong>{{ $errors->first('status') }}</strong></span>--}}
-            {{--@endif--}}
-        {{--</div>--}}
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-    </form>
+    </div>
+    {!! Form::close() !!}
 @endsection

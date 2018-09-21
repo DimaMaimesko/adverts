@@ -23,8 +23,9 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = "active";
 
     const SUPERADMIN = 'Superadmin';
+    const MODERATOR = 'Moderator';
     // manager roles
-    const ADMIN_ROLES = [self::SUPERADMIN];
+    const ADMIN_ROLES = [self::SUPERADMIN,self::MODERATOR];
 
     protected $fillable = [
         'name', 'email', 'password', 'verify_token','status'

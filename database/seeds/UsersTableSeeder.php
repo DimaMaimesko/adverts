@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
         $admin->verify_token = str_random(16);
         $admin->status = USER::STATUS_ACTIVE;
         $admin->save();
-
+        $admin->assignRole(User::SUPERADMIN);
         factory(User::class, 10)->create();
     }
 }

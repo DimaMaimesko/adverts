@@ -21,6 +21,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Status</th>
+            <th>Role</th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +37,8 @@
                     @if ($user->isActive())
                         <span class="badge badge-primary">Active</span>
                     @endif
-                </td>
+                 <td>{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
+
             </tr>
         @endforeach
 
