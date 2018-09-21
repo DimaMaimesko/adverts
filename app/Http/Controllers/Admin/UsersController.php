@@ -13,10 +13,44 @@ class UsersController extends Controller
 {
     private const USERS_FOR_PAGINATION = 10;
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id','desc')->paginate(self::USERS_FOR_PAGINATION);
-        return view('admin.users.index',['users' => $users]);
+        //$users = User::orderBy('id','desc')->paginate(self::USERS_FOR_PAGINATION);
+        $query = User::orderByDesc('id');
+
+        if (!empty($value = $request->get('id'))) {
+            $query->where('id', $value);
+        }
+
+        if (!empty($value = $request->get('name'))) {
+            $query->where('name', 'like', '%' . $value . '%');
+        }
+
+        if (!empty($value = $request->get('email'))) {
+            $query->where('email', 'like', '%' . $value . '%');
+        }
+
+        if (!empty($value = $request->get('status'))) {
+            $query->where('status', $value);
+        }
+
+        if (!empty($value = $request->get('role'))) {
+            $query->role($value)->get();
+        }
+
+        $statuses = [
+            User::STATUS_WAIT => 'Waiting',
+            User::STATUS_ACTIVE => 'Active',
+        ];
+
+        $roles = Role::all()->pluck('name', 'id')->toArray();
+
+        $users = $query->paginate(self::USERS_FOR_PAGINATION);
+        return view('admin.users.index',[
+            'users' => $users,
+            'statuses' => $statuses,
+            'roles' => $roles,
+        ]);
     }
 
     public function create()

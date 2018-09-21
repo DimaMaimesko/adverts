@@ -22,8 +22,9 @@ class User extends Authenticatable
     public const STATUS_WAIT = "wait";
     public const STATUS_ACTIVE = "active";
 
-    const SUPERADMIN = 'Superadmin';
-    const MODERATOR = 'Moderator';
+    public const SUPERADMIN = 'Superadmin';
+    public const MODERATOR = 'Moderator';
+    public const USER = 'User';
     // manager roles
     const ADMIN_ROLES = [self::SUPERADMIN,self::MODERATOR];
 
@@ -34,6 +35,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function rolesList(): array
+    {
+        return [
+            self::USER => 'User',
+            self::MODERATOR => 'Moderator',
+            self::SUPERADMIN => 'Admin',
+        ];
+    }
 
     public function isWait(){
         if ($this->status == self::STATUS_WAIT)

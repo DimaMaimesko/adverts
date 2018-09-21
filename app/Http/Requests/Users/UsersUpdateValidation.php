@@ -27,7 +27,7 @@ class UsersUpdateValidation extends FormRequest
     public function rules()
     {
         return [
-           'name' => 'required|string|max:100',
+           'name' => 'required|string|max:100|min:3',
            'email' => 'required|string|email|max:100|unique:users,id,'.$this->user->id,//исключаем текущий email из проверки на уникальность
 //           'status' => ['required','string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])],
         ];

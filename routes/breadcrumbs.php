@@ -69,3 +69,24 @@ Breadcrumbs::register('admin.permissions.show', function( $crumbs, $id){
     $crumbs->parent('admin.permissions.index');
     $crumbs->push('Show permissions', route('admin.permissions.show',$id));
 });
+
+//Roles
+Breadcrumbs::register('admin.roles.index', function( $crumbs){
+    $crumbs->parent('home');
+    $crumbs->push('Roles', route('admin.roles.index'));
+});
+
+Breadcrumbs::register('admin.roles.create', function( $crumbs){
+    $crumbs->parent('admin.roles.index');
+    $crumbs->push('Create roles', route('admin.roles.create'));
+});
+
+Breadcrumbs::register('admin.roles.edit', function( $crumbs, $id){
+    $crumbs->parent('admin.roles.index');
+    $crumbs->push('Edit roles', route('admin.roles.edit',$id));
+});
+
+Breadcrumbs::register('admin.roles.show', function( $crumbs, $id){
+    $crumbs->parent('admin.roles.index');
+    $crumbs->push('Show roles', route('admin.roles.show',$id));
+});

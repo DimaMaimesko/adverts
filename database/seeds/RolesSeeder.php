@@ -50,5 +50,6 @@
 	        $role->givePermissionTo(Permission::all());
 
 	        Role::create(['name' => User::MODERATOR]);
+	        Role::create(['name' => User::USER]);
         }
     }
