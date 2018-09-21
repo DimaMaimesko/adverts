@@ -49,3 +49,23 @@ Breadcrumbs::register('admin.users.edit', function ($crumbs, $user) {
     $crumbs->parent('admin.users.show', $user);
     $crumbs->push('Edit', route('admin.users.edit', $user));
 });
+//Permissions
+Breadcrumbs::register('admin.permissions.index', function( $crumbs){
+    $crumbs->parent('home');
+    $crumbs->push('Permissions', route('admin.permissions.index'));
+});
+
+Breadcrumbs::register('admin.permissions.create', function( $crumbs){
+    $crumbs->parent('admin.permissions.index');
+    $crumbs->push('Create permission', route('admin.permissions.create'));
+});
+
+Breadcrumbs::register('admin.permissions.edit', function( $crumbs, $id){
+    $crumbs->parent('admin.permissions.index');
+    $crumbs->push('Edit permissions', route('admin.permissions.edit',$id));
+});
+
+Breadcrumbs::register('admin.permissions.show', function( $crumbs, $id){
+    $crumbs->parent('admin.permissions.index');
+    $crumbs->push('Show permissions', route('admin.permissions.show',$id));
+});

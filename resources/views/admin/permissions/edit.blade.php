@@ -12,15 +12,15 @@
                             <label for="roleName">Name</label>
                             {!! Form::text('name',$permission->name,['class'=>'form-control','placeholder'=>'Name','required','id'=>'roleName']) !!}
                         </div>
-                        <div class="panel panel-default">
+                        <div class="alert alert-success">
                             <div class="panel-heading">
                                 <button type="submit" class="btn btn-success text-uppercase"><i class="fa fa-save"></i> Submit</button>
                             </div>
                         </div>
                         {!! Form::close() !!}
 
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
+                    <div class="alert alert-danger" role="alert">
+                        <div class="panel panel-heading mr-2">
                             {{ Form::open(['url' => route('admin.permissions.destroy',['id' => $permission->id]),'method'=>'DELETE']) }}
                             <button type="submit" class="btn btn-danger text-uppercase del-field" data-confirm="Do you want to delete Permission {{$permission->name}}?">
                                 <i class="glyphicon glyphicon-remove"></i> Delete
