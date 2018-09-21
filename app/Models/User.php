@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 /**
  * @property int $id
  * @property string $name
@@ -16,11 +17,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     public const STATUS_WAIT = "wait";
     public const STATUS_ACTIVE = "active";
 
+    const SUPERADMIN = 'Superadmin';
+    // manager roles
+    const ADMIN_ROLES = [self::SUPERADMIN];
 
     protected $fillable = [
         'name', 'email', 'password', 'verify_token','status'

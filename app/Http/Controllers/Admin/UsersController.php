@@ -41,6 +41,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+        dump($user->toArray());
         return view('admin.users.show', compact('user'));
     }
 
