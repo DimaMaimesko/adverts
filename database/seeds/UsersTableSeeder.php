@@ -21,7 +21,9 @@ class UsersTableSeeder extends Seeder
         $admin->status = USER::STATUS_ACTIVE;
         $admin->save();
         $admin->assignRole(User::SUPERADMIN);
+
         factory(User::class, 100)->create();
+
         $users = User::all();
         foreach ($users as $user) {
             $user->assignRole(User::USER);

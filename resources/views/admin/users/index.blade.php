@@ -93,10 +93,8 @@
                         <span class="badge badge-primary">Active</span>
                     @endif
                  <td>{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
-
             </tr>
         @endforeach
-
         </tbody>
     </table>
     {{ $users->appends(Request::except('page'))->links() }}

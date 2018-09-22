@@ -13,7 +13,7 @@ use App\Models\User;
 |
 */
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     $active = $faker->boolean;
     return [
         'name' => $faker->name,
