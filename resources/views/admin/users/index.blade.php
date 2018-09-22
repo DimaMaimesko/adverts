@@ -99,7 +99,5 @@
 
         </tbody>
     </table>
-
-    {{ $users->links() }}
-
+    {{ $users->appends(Request::except('page'))->links() }}
 @endsection

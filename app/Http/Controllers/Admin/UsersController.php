@@ -17,7 +17,6 @@ class UsersController extends Controller
     {
         //$users = User::orderBy('id','desc')->paginate(self::USERS_FOR_PAGINATION);
         $query = User::orderByDesc('id');
-
         if (!empty($value = $request->get('id'))) {
             $query->where('id', $value);
         }
@@ -44,7 +43,6 @@ class UsersController extends Controller
         ];
 
         $roles = Role::all()->pluck('name', 'id')->toArray();
-
         $users = $query->paginate(self::USERS_FOR_PAGINATION);
         return view('admin.users.index',[
             'users' => $users,
