@@ -26,9 +26,14 @@ class RegionsController extends Controller
 
     public function create()
     {
-
-
         return view('admin.regions.create');
+    }
+
+    public function createsubregion($parent_id)
+    {
+        return view('admin.regions.create', [
+            'parent_id' => $parent_id,
+        ]);
     }
 
     public function store(RegionsCreateValidation $request)
@@ -36,7 +41,7 @@ class RegionsController extends Controller
         $region = Region::create([
             'name' => $request->name,
             'slug' => $request->slug,
-            'parent_id' => $request->parent_id,
+            'parent_id' => $request->parent_id == $request->id ?  null : $request->parent_id,
         ]);
         return redirect()->route('admin.regions.show', $region)->with('success','The New Region successfully created');
     }
@@ -57,7 +62,7 @@ class RegionsController extends Controller
         $region->update([
             'name' => $request->name,
             'slug' => $request->slug,
-            'parent_id' => $request->parent_id,
+            'parent_id' => $request->parent_id == $request->id ?  null : $request->parent_id,
         ]);
 
         return redirect()->route('admin.regions.show', $region);

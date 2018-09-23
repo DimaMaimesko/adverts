@@ -33,5 +33,6 @@ Route::group(
         Route::resource('permissions', 'PermissionsController');
         Route::resource('roles', 'RolesController');
         Route::resource('regions', 'RegionsController');
+        Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
     }
 );

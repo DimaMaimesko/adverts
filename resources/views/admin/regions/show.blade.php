@@ -29,7 +29,14 @@
         </tbody>
     </table>
 
-
+    <div class="col-6 col-md-4 col-lg-2">
+        <p>
+            <a href="{{ route('admin.subregion',['parent_id' => $region->id]) }}" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Create new sub-region in {{ $region->name }}
+            </a>
+        </p>
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
