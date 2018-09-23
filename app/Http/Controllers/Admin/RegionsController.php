@@ -16,11 +16,12 @@ class RegionsController extends Controller
 
     public function index(Request $request)
     {
-        $regions = Region::orderBy('id')->paginate(self::REGIONS_FOR_PAGINATION);
-
+//        $regions = Region::orderBy('id')->paginate(self::REGIONS_FOR_PAGINATION);
+        $regions = Region::where('parent_id',null)->orderBy('id')->paginate(self::REGIONS_FOR_PAGINATION);
         return view('admin.regions.index',[
             'regions' => $regions,
         ]);
+
     }
 
     public function create()
@@ -42,7 +43,8 @@ class RegionsController extends Controller
 
     public function show(Region $region)
     {
-        return view('admin.regions.show', compact('region'));
+        $children = $region->children()->orderByDesc('name')->get();
+        return view('admin.regions.show', compact(['region', 'children']));
     }
 
     public function edit(Region $region)

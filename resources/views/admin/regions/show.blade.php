@@ -28,6 +28,26 @@
             </tr>
         </tbody>
     </table>
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Slug</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($children as $child)
+            <tr>
+                <td>{{ $child->id }}</td>
+                <td><a href="{{ route('admin.regions.show', $child) }}">{{ $child->name }}</a></td>
+                <td>{{ $child->slug }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection
 
 @section('scripts')
