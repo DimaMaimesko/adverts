@@ -24,7 +24,7 @@
                 <th>Slug</th><td>{{ $region->slug }}</td>
             </tr>
             <tr>
-                <th>Parent id</th><td>{{ $region->parent_id }}</td>
+                <th>Parent id</th><td>{{ $region->parent_id }} {{$region->parent ? '('.$region->parent->name.')' : ""}}</td>
             </tr>
         </tbody>
     </table>

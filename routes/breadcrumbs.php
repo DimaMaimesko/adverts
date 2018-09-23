@@ -90,3 +90,25 @@ Breadcrumbs::register('admin.roles.show', function( $crumbs, $id){
     $crumbs->parent('admin.roles.index');
     $crumbs->push('Show roles', route('admin.roles.show',$id));
 });
+
+// Regions
+
+Breadcrumbs::register('admin.regions.index', function ($crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Regions', route('admin.regions.index'));
+});
+
+Breadcrumbs::register('admin.regions.create', function ($crumbs) {
+    $crumbs->parent('admin.regions.index');
+    $crumbs->push('Create', route('admin.regions.create'));
+});
+
+Breadcrumbs::register('admin.regions.show', function ($crumbs, $region) {
+    $crumbs->parent('admin.regions.index');
+    $crumbs->push($region->name, route('admin.regions.show', $region));
+});
+
+Breadcrumbs::register('admin.regions.edit', function ($crumbs, $region) {
+    $crumbs->parent('admin.regions.show', $region);
+    $crumbs->push('Edit', route('admin.regions.edit', $region));
+});

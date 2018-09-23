@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Regions;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class RegionsUpdateValidation extends FormRequest
 {
     /**
@@ -25,8 +25,8 @@ class RegionsUpdateValidation extends FormRequest
     {
         return [
            'name' => 'required|string|max:200',
-           'slug' => 'required|string|email|max:100|unique:users',
-           'parent_id' => 'required|string',
+           'slug' => ['required','string','max:100',Rule::unique('regions')->ignore($this->region->id)],//исключаем текущий slug из проверки на уникальность
+           'parent_id' => 'numeric',
         ];
     }
 }

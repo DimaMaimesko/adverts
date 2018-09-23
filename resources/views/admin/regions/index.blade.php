@@ -21,7 +21,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Slug</th>
-            <th>Parent_id</th>
+            <th>Parent_id (name)</th>
         </tr>
         </thead>
         <tbody>
@@ -30,7 +30,7 @@
                 <td>{{ $region->id }}</td>
                 <td><a href="{{ route('admin.regions.show', $region) }}">{{ $region->name }}</a></td>
                 <td>{{ $region->slug }}</td>
-                <td>{{ $region->parent_id }}</td>
+                <td>{{ $region->parent_id }} {{$region->parent ? '('.$region->parent->name.')' : ""}}</td>
             </tr>
         @endforeach
         </tbody>
