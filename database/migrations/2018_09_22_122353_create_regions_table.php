@@ -17,10 +17,11 @@ class CreateRegionsTable extends Migration
             $table->increments('id');
             $table->string('name',200)->index();
             $table->string('slug',200);
-            $table->integer('parent_id')->nullable()->references('id')->on('regions')->onDelete('CASCADE');
+            $table->integer('parent_id')->nullable()->references('id')->on('regions')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['parent_id','slug']);
             $table->unique(['parent_id','name']);
+            $table->softDeletes();
         });
     }
 
