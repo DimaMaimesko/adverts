@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
              RolesSeeder::class,
              UsersTableSeeder::class,
              RegionsTableSeeder::class,
+             AdvertCategoryTableSeeder::class,
 
              ]
          );

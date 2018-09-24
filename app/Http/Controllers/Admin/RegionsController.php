@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Regions\RegionsCreateValidation;
-use App\Http\Requests\Regions\RegionsUpdateValidation;
+use App\Http\Requests\Regions\CaregoriesCreateValidation;
+use App\Http\Requests\Regions\CategoriesUpdateValidation;
 use App\Models\Region;
 
 class RegionsController extends Controller
@@ -36,7 +36,7 @@ class RegionsController extends Controller
         ]);
     }
 
-    public function store(RegionsCreateValidation $request)
+    public function store(CaregoriesCreateValidation $request)
     {
         $region = Region::create([
             'name' => $request->name,
@@ -57,7 +57,7 @@ class RegionsController extends Controller
         return view('admin.regions.edit', compact('region'));
     }
 
-    public function update(RegionsUpdateValidation $request, Region $region)
+    public function update(CategoriesUpdateValidation $request, Region $region)
     {
         $region->update([
             'name' => $request->name,

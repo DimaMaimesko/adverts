@@ -34,5 +34,7 @@ Route::group(
         Route::resource('roles', 'RolesController');
         Route::resource('regions', 'RegionsController');
         Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
+        Route::resource('categories', 'CategoriesController');
+
     }
 );

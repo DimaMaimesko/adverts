@@ -116,3 +116,29 @@ Breadcrumbs::register('admin.regions.edit', function ($crumbs, $region) {
     $crumbs->parent('admin.regions.show', $region);
     $crumbs->push('Edit', route('admin.regions.edit', $region));
 });
+
+// Categories
+
+Breadcrumbs::register('admin.categories.index', function ($crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Categories', route('admin.categories.index'));
+});
+
+Breadcrumbs::register('admin.categories.create', function ($crumbs) {
+    $crumbs->parent('admin.categories.index');
+    $crumbs->push('Create', route('admin.categories.create'));
+});
+
+Breadcrumbs::register('admin.categories.show', function ($crumbs, $category) {
+    if ($parent = $category->parent){
+        $crumbs->parent('admin.categories.show',$parent);
+    }else{
+        $crumbs->parent('admin.categories.index');
+    }
+    $crumbs->push($category->name, route('admin.categories.show', $category));
+});
+
+Breadcrumbs::register('admin.categories.edit', function ($crumbs, $category) {
+    $crumbs->parent('admin.categories.show', $category);
+    $crumbs->push('Edit', route('admin.categories.edit', $category));
+});

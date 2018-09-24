@@ -4,4 +4,5 @@
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.permissions.index') }}">Permissions</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.roles.index') }}">Roles</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.regions.index') }}">Regions</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a></li>
 </ul>
