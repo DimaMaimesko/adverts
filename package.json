@@ -19,6 +19,9 @@
         "popper.js": "^1.12"
     },
     "dependencies": {
-        "gentelella": "^1.4.0"
+        "font-awesome": "^4.7.0",
+        "gentelella": "^1.4.0",
+        "npm": "^6.4.1",
+        "peer": "^0.2.10"
     }
 }

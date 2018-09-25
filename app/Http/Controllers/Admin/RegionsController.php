@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Regions\CaregoriesCreateValidation;
-use App\Http\Requests\Regions\CategoriesUpdateValidation;
+use App\Http\Requests\Regions\RegionsCreateValidation;
+use App\Http\Requests\Regions\RegionsUpdateValidation;
 use App\Models\Region;
 
 class RegionsController extends Controller
@@ -17,7 +17,7 @@ class RegionsController extends Controller
     public function index(Request $request)
     {
 //        $regions = Region::orderBy('id')->paginate(self::REGIONS_FOR_PAGINATION);
-        $regions = Region::where('parent_id',null)->orderBy('id')->paginate(self::REGIONS_FOR_PAGINATION);
+        $regions = Region::where('parent_id',null)->orderBy('sort')->with('parent')->paginate(self::REGIONS_FOR_PAGINATION);
         return view('admin.regions.index',[
             'regions' => $regions,
         ]);
@@ -36,7 +36,7 @@ class RegionsController extends Controller
         ]);
     }
 
-    public function store(CaregoriesCreateValidation $request)
+    public function store(RegionsCreateValidation $request)
     {
         $region = Region::create([
             'name' => $request->name,
@@ -57,7 +57,7 @@ class RegionsController extends Controller
         return view('admin.regions.edit', compact('region'));
     }
 
-    public function update(CategoriesUpdateValidation $request, Region $region)
+    public function update(RegionsUpdateValidation $request, Region $region)
     {
         $region->update([
             'name' => $request->name,
@@ -91,6 +91,63 @@ class RegionsController extends Controller
             if (count($child->children) > 0){
                 $this->getAllChildren($child);
             }
+        }
+    }
+
+    public function up($region){
+        $targetRegion = Region::find($region);
+        if ($targetRegion->sort > 0){
+            $neighborRegion = Region::where('parent_id', $targetRegion->parent_id)->where('sort', $targetRegion->sort - 1)->first();
+            $neighborRegion->update(['sort' => $targetRegion->sort]);
+            $targetRegion->update(['sort' => $targetRegion->sort - 1]);
+            return back()->with('success','Moved up successfully');
+        }
+        else{
+            return back()->with('error','Can\'t be move up');
+        }
+    }
+
+    public function down($region){
+        $targetRegion = Region::find($region);
+        $siblingsAmount = Region::where('parent_id', $targetRegion->parent_id)->count();
+        if ($targetRegion->sort < $siblingsAmount-1){
+            $neighborRegion = Region::where('parent_id', $targetRegion->parent_id)->where('sort', $targetRegion->sort + 1)->first();
+            $neighborRegion->update(['sort' => $targetRegion->sort]);
+            $targetRegion->update(['sort' => $targetRegion->sort + 1]);
+            return back()->with('success','Moved down successfully');
+        }
+        else{
+            return back()->with('error','Can\'t be move down');
+        }
+    }
+
+    public function first($region){
+        $targetRegion = Region::find($region);
+        if ($targetRegion->sort > 0){
+            Region::where('parent_id', $targetRegion->parent_id)
+                 ->where('sort', '>=', 0)
+                 ->where('sort', '<', $targetRegion->sort)
+                 ->increment('sort');
+            $targetRegion->update(['sort' => 0]);
+            return back()->with('success','Moved up successfully');
+        }
+        else{
+            return back()->with('error','Can\'t be move up');
+        }
+    }
+
+    public function last($region){
+        $targetRegion = Region::find($region);
+        $siblingsAmount = Region::where('parent_id', $targetRegion->parent_id)->count();
+        if ($targetRegion->sort < $siblingsAmount - 1){
+            Region::where('parent_id', $targetRegion->parent_id)
+                ->where('sort', '>=', $targetRegion->sort)
+                ->decrement('sort');
+            $targetRegion->update(['sort' => $siblingsAmount - 1]);
+            return back()->with('success','Moved down successfully');
+        }
+        else{
+            return back()->with('error','Can\'t be move down');
         }
     }
 }

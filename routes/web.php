@@ -33,8 +33,15 @@ Route::group(
         Route::resource('permissions', 'PermissionsController');
         Route::resource('roles', 'RolesController');
         Route::resource('regions', 'RegionsController');
+        Route::group(['prefix' => 'regions/{region}', 'as' => 'regions.'], function () {
+            Route::post('/first', 'RegionsController@first')->name('first');
+            Route::post('/up',    'RegionsController@up')->name('up');
+            Route::post('/down',  'RegionsController@down')->name('down');
+            Route::post('/last',  'RegionsController@last')->name('last');
+        });
         Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
         Route::resource('categories', 'CategoriesController');
+
 
     }
 );

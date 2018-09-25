@@ -2,20 +2,16 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Region;
-use Faker\Generator as Faker;
+
 class RegionsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
         $level_0_sort = 10;
         $level_1_sort = random_int(3, 10);
-        $level_2_sort = random_int(3, 10);
-        $level_3_sort = random_int(3, 10);
+        $level_2_sort = random_int(0, 10);
+        $level_3_sort = random_int(0, 10);
 
         for ($i = 0; $i <= $level_0_sort; $i++){
          factory(Region::class)->create(['sort' => $i]);
