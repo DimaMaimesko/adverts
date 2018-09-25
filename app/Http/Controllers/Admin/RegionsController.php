@@ -48,7 +48,7 @@ class RegionsController extends Controller
 
     public function show(Region $region)
     {
-        $children = $region->children()->orderByDesc('name')->get();
+        $children = $region->children()->orderBy('sort')->get();
         return view('admin.regions.show', compact(['region', 'children']));
     }
 
@@ -108,6 +108,7 @@ class RegionsController extends Controller
     }
 
     public function down($region){
+
         $targetRegion = Region::find($region);
         $siblingsAmount = Region::where('parent_id', $targetRegion->parent_id)->count();
         if ($targetRegion->sort < $siblingsAmount-1){

@@ -43,6 +43,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Slug</th>
+            <th>Sorting</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +52,26 @@
                 <td>{{ $child->id }}</td>
                 <td><a href="{{ route('admin.regions.show', $child) }}">{{ $child->name }}</a></td>
                 <td>{{ $child->slug }}</td>
+                <td>
+                    <div class="d-flex flex-row">
+                        <form method="POST" action="{{ route('admin.regions.first', $child) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-up"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.regions.up', $child) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-up"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.regions.down', $child) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-down"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.regions.last', $child) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-down"></span></button>
+                        </form>
+                    </div>
+                </td>
             </tr>
         @endforeach
         </tbody>
