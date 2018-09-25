@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
 {
-    protected $fillable = ['name','slug','parent_id'];
+    protected $fillable = ['name','slug','parent_id','sort'];
 
     public function parent(){
         return $this->belongsTo(static::class, 'parent_id', 'id');

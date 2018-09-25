@@ -11,8 +11,6 @@ use App\Models\Adverts\Category;
 class CategoriesController extends Controller
 {
 
-    private $allChildrenIds = [];
-
     public function index(Request $request)
     {
         $categories = Category::defaultOrder()->withDepth()->with('parent')->get();
