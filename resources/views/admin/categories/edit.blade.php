@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
         <label for="userCreateRole">Parent</label>
-        {!! Form::select('parent_id',$parents, $category->parent->id,['class'=>'form-control','placeholder'=>'Parent Category','required']) !!}
+        {!! Form::select('parent_id',$parents, isset($category->parent->id) ? $category->parent->id : null,['class'=>'form-control','placeholder'=>'Parent Category','required']) !!}
     </div>
 
     <button type="submit" class="btn btn-success text-uppercase"><i class="fa fa-save"></i> Submit</button>

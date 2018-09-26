@@ -23,6 +23,7 @@
             <th>Slug</th>
             <th>Parent_id (name)</th>
             <th>Depth</th>
+            <th>Sorting</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,26 @@
                 <td>{{ $category->slug }}</td>
                 <td>{{ $category->parent_id }} {{$category->parent ? '('.$category->parent->name.')' : ""}}</td>
                 <td>{{ $category->depth }}</td>
+                <td>
+                    <div class="d-flex flex-row">
+                        <form method="POST" action="{{ route('admin.categories.first', $category) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-up"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.categories.up', $category) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-up"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.categories.down', $category) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-down"></span></button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.categories.last', $category) }}" class="mr-1">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-down"></span></button>
+                        </form>
+                    </div>
+                </td>
             </tr>
         @endforeach
         </tbody>

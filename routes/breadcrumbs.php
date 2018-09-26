@@ -142,3 +142,20 @@ Breadcrumbs::register('admin.categories.edit', function ($crumbs, $category) {
     $crumbs->parent('admin.categories.show', $category);
     $crumbs->push('Edit', route('admin.categories.edit', $category));
 });
+
+// Advert Category Attributes
+
+Breadcrumbs::register('admin.categories.attributes.create', function ($crumbs, $category) {
+    $crumbs->parent('admin.categories.show', $category);
+    $crumbs->push('Create', route('admin.categories.attributes.create', $category));
+});
+
+Breadcrumbs::register('admin.categories.attributes.show', function ( $crumbs,  $category,  $attribute) {
+    $crumbs->parent('admin.categories.show', $category);
+    $crumbs->push($attribute->name, route('admin.categories.attributes.show', [$category, $attribute]));
+});
+
+Breadcrumbs::register('admin.categories.attributes.edit', function ( $crumbs,  $category,  $attribute) {
+    $crumbs->parent('admin.categories.attributes.show', $category, $attribute);
+    $crumbs->push('Edit', route('admin.categories.attributes.edit', [$category, $attribute]));
+});

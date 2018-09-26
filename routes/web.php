@@ -32,6 +32,7 @@ Route::group(
         Route::resource('users', 'UsersController');
         Route::resource('permissions', 'PermissionsController');
         Route::resource('roles', 'RolesController');
+        Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
         Route::resource('regions', 'RegionsController');
         Route::group(['prefix' => 'regions/{region}', 'as' => 'regions.'], function () {
             Route::post('/first', 'RegionsController@first')->name('first');
@@ -39,8 +40,15 @@ Route::group(
             Route::post('/down',  'RegionsController@down')->name('down');
             Route::post('/last',  'RegionsController@last')->name('last');
         });
-        Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
         Route::resource('categories', 'CategoriesController');
+        Route::group(['prefix' => 'categories/{category}', 'as' => 'categories.'], function () {
+            Route::post('/first', 'CategoriesController@first')->name('first');
+            Route::post('/up',    'CategoriesController@up')->name('up');
+            Route::post('/down',  'CategoriesController@down')->name('down');
+            Route::post('/last',  'CategoriesController@last')->name('last');
+            Route::resource('attributes', 'AttributesController')->except('index');
+        });
+
 
 
     }

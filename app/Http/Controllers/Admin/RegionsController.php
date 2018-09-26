@@ -38,10 +38,12 @@ class RegionsController extends Controller
 
     public function store(RegionsCreateValidation $request)
     {
+        $siblingsAmount = Region::where('parent_id', $request->parent_id)->count();
         $region = Region::create([
             'name' => $request->name,
             'slug' => $request->slug,
             'parent_id' => $request->parent_id == $request->id ?  null : $request->parent_id,
+            'sort' => $siblingsAmount,
         ]);
         return redirect()->route('admin.regions.show', $region)->with('success','The New Region successfully created');
     }
@@ -101,10 +103,7 @@ class RegionsController extends Controller
             $neighborRegion->update(['sort' => $targetRegion->sort]);
             $targetRegion->update(['sort' => $targetRegion->sort - 1]);
             return back()->with('success','Moved up successfully');
-        }
-        else{
-            return back()->with('error','Can\'t be move up');
-        }
+        }else   return back()->with('error','Can\'t be move up');
     }
 
     public function down($region){
@@ -116,10 +115,7 @@ class RegionsController extends Controller
             $neighborRegion->update(['sort' => $targetRegion->sort]);
             $targetRegion->update(['sort' => $targetRegion->sort + 1]);
             return back()->with('success','Moved down successfully');
-        }
-        else{
-            return back()->with('error','Can\'t be move down');
-        }
+        }else  return back()->with('error','Can\'t be move down');
     }
 
     public function first($region){
@@ -131,10 +127,7 @@ class RegionsController extends Controller
                  ->increment('sort');
             $targetRegion->update(['sort' => 0]);
             return back()->with('success','Moved up successfully');
-        }
-        else{
-            return back()->with('error','Can\'t be move up');
-        }
+        }else return back()->with('error','Can\'t be move up');
     }
 
     public function last($region){
@@ -146,9 +139,6 @@ class RegionsController extends Controller
                 ->decrement('sort');
             $targetRegion->update(['sort' => $siblingsAmount - 1]);
             return back()->with('success','Moved down successfully');
-        }
-        else{
-            return back()->with('error','Can\'t be move down');
-        }
+        }else return back()->with('error','Can\'t be move down');
     }
 }
