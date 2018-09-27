@@ -159,3 +159,19 @@ Breadcrumbs::register('admin.categories.attributes.edit', function ( $crumbs,  $
     $crumbs->parent('admin.categories.attributes.show', $category, $attribute);
     $crumbs->push('Edit', route('admin.categories.attributes.edit', [$category, $attribute]));
 });
+
+// Cabinet
+
+Breadcrumbs::register('cabinet.profile.home', function ( $crumbs) {
+    $crumbs->push('Profile', route('cabinet.profile.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.edit', function ( $crumbs) {
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Edit', route('cabinet.profile.edit'));
+});
+
+Breadcrumbs::register('cabinet.profile.phone', function ( $crumbs) {
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Phone', route('cabinet.profile.phone'));
+});

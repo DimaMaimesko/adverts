@@ -2,20 +2,40 @@
 
 namespace App\Http\Controllers\Cabinet;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-class HomeController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+class ProfileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     public function index()
     {
+        $user = Auth::user();
+        return view('cabinet.profile.home',compact('user'));
 
-        return view('cabinet.home');
+    }
 
+    public function edit()
+    {
+        $user = Auth::user();
+        return view('cabinet.profile.edit',compact('user'));
+
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request,[
+            'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+        ]);
+        $user = Auth::user();
+        $oldPhone = $user->phone;
+        $user->update($request->only('name','last_name','phone'));
+        if ($user->phone !== $oldPhone){
+            $user->unverifyPhone();
+        }
+        return redirect()->route('cabinet.profile.home');
     }
 }

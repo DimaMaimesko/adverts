@@ -1,26 +1,40 @@
 @extends('layouts.app')
-{{--опустошили хлебную крошку для главной страницы--}}
-@section ('breadcrumbs')
-@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Cabinet</div>
+    @include('cabinet.profile._nav')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+    <div class="mb-3">
+        <a href="{{ route('cabinet.profile.edit') }}" class="btn btn-primary">Edit</a>
     </div>
-</div>
+
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th>First Name</th><td>{{ $user->name }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th><td>{{ $user->last_name }}</td>
+        </tr>
+        <tr>
+            <th>Email</th><td>{{ $user->email }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>
+                @if ($user->phone)
+                    {{ $user->phone }}
+                    @if (!$user->isPhoneVerified())
+                        <i>(is not verified)</i><br />
+                        <form method="POST" action="{{ route('cabinet.profile.phone') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-success">Verify</button>
+                        </form>
+                    @endif
+                @endif
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
 @endsection
