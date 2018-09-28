@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.profile._nav')
+    @include('cabinet._nav')
 
     <form method="POST" action="{{ route('cabinet.profile.phone.verify') }}">
         @csrf
