@@ -3,20 +3,26 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
-use App\Services\Sms\Nexmo;
+use App\Services\Sms\SmsSender;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PhoneController extends Controller
 {
+    private $sms;
+
+    public function __construct(SmsSender $sms)
+    {
+        $this->sms = $sms;
+    }
+
     public function request(Request $request)
     {
         $user = Auth::user();
         try {
            $token = $user->requestPhoneVerification(Carbon::now());
-           $sender = new Nexmo();
-           $sender->send('380637090697',"Hello from Adverts! Code: ".$token);
+           $this->sms->send($user->phone,"Hello from Adverts! Code: ".$token);
         } catch (\DomainException $e) {
            $request->session()->flash('error', $e->getMessage());
         }

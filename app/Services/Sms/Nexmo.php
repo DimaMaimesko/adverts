@@ -14,13 +14,13 @@ class Nexmo implements SmsSender
     private $apiSecret;
     private $client;
 
-    public function __construct($apiKey = '42b2afe0', $apiSecret = 'dWbo8f3jzvZ79LQ7')
+    public function __construct($api)
     {
-        if(empty($apiKey) || empty($apiSecret)){
+        if(empty($api['api_key']) || empty($api['api_secret'])){
             throw new \InvalidArgumentException('SMS api_key and api_secret must be set');
         }
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        $this->apiKey = $api['api_key'];
+        $this->apiSecret = $api['api_secret'];
         $basic  = new \Nexmo\Client\Credentials\Basic($this->apiKey, $this->apiSecret);
         $this->client = new \Nexmo\Client($basic);
     }

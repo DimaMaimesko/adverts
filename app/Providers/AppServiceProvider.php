@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Sms\Nexmo;
+use App\Services\Sms\SmsSender;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->singleton(SmsSender::class, function ($app){
+            $config = $app->make('config')->get('sms');
+            return new Nexmo($config);
+        });
     }
 }
