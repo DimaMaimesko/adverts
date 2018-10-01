@@ -62,6 +62,15 @@
                                       @csrf
                                     </form>
 
+                                    <a class="dropdown-item" href="{{ route('home') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('home').submit();">
+                                        {{ __('Home') }}
+                                    </a>
+                                    <form id="home" action="{{ route('home') }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
+
                                     <a class="dropdown-item" href="{{ route('cabinet.profile.home') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('cabinet-form').submit();">
