@@ -27,6 +27,10 @@ Route::group(
             Route::put('/phone', 'PhoneController@verify')->name('phone.verify');
         });
         Route::get('/adverts', 'Adverts\AdvertsController@index')->name('adverts.home')->middleware(\App\Http\Middleware\FilledProfile::class);
+        Route::get('/adverts/create/category', 'Adverts\CreateController@category')->name('adverts.create.category');
+        Route::get('/adverts/create/region/{category}/{region?}', 'Adverts\CreateController@region')->name('adverts.create.region');
+        Route::get('/adverts/create/advert/{category}/{region?}', 'Adverts\CreateController@advert')->name('adverts.create.advert');
+        Route::post('/adverts/create/store/{category}/{region?}', 'Adverts\CreateController@store')->name('adverts.create.store');
 
     }
 );

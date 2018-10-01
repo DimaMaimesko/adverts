@@ -7,7 +7,7 @@ class AdvertsController extends Controller
 {
     public function index()
     {
-        return view('cabinet.adverts.home');
+        rwebeturn view('cabinet.adverts.home');
     }
 
     public function create()

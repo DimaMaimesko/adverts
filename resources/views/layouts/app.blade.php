@@ -58,8 +58,25 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                      @csrf
+                                    </form>
+
+                                    <a class="dropdown-item" href="{{ route('cabinet.profile.home') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('cabinet-form').submit();">
+                                        {{ __('Cabinet') }}
+                                    </a>
+                                    <form id="cabinet-form" action="{{ route('cabinet.profile.home') }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
+
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('admin-form').submit();">
+                                        {{ __('Admin') }}
+                                    </a>
+                                    <form id="admin-form" action="{{ route('admin.home') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
