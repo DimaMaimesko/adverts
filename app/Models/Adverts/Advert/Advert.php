@@ -4,8 +4,11 @@ namespace App\Models\Adverts;
 
 use App\Models\Adverts\Advert\Value;
 use App\Models\Region;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 /**
  * @property int $id
  * @property int $user_id
@@ -32,6 +35,8 @@ use App\Models\User;
  */
 class Advert extends Model
 {
+    public const EXPIRES_DAYS = 15;
+
     public const STATUS_DRAFT = 'draft';
     public const STATUS_MODERATION = 'moderation';
     public const STATUS_ACTIVE = 'active';
@@ -90,6 +95,54 @@ class Advert extends Model
     public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;
+    }
+
+    public function scopeMyAdverts()
+    {
+        return $this->where('user_id', Auth::id())->orderByDesc('updated_at');
+    }
+
+    public function scopeForCategory(Builder $query, Category $category)
+    {
+        return $query->where('category_id', $category->id);
+    }
+
+    public function scopeForRegion(Builder $query, Region $region)
+    {
+        return $query->where('region_id', $region->id);
+    }
+
+    public function sendToModeration(){
+        if (!$this->isDraft()){
+            throw new \DomainException('The advert is not a draft!');
+        }
+        //здесь должна быть логика проверки заполненности полей: фотки, аттрибуты и т.д.
+
+        //если все хорошо заполнено  - меняем статус на moderation
+        $this->update([
+            'status' => self::STATUS_MODERATION,
+        ]);
+    }
+
+    public function moderate(Carbon $date){
+        if (!$this->isOnModeration()){
+            throw new \DomainException('The advert should have moderation status');
+        }
+        $this->update([
+            'published_at' => $date,
+            'expires_at' => $date->copy()->addDays(self::EXPIRES_DAYS),
+            'status' => self::STATUS_ACTIVE,
+        ]);
+    }
+
+    public function reject($reason){
+        if (!$this->isOnModeration()){
+            throw new \DomainException('The advert should have moderation status');
+        }
+        $this->update([
+            'reject_reason' => $reason,
+            'status' => self::STATUS_DRAFT,
+        ]);
     }
 
 }

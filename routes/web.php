@@ -1,12 +1,14 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{adverts_path?}', 'Adverts\AdvertsController@index')->name('index')->where('adverts_path', '.+');
+
+//Route::get('/adverts/{category?}/{region?}', 'Adverts\AdvertsController@index')->name('adverts.index');
+Route::get('/adverts/show/{advert}', 'Adverts\AdvertsController@show')->name('adverts.show');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');
 Route::group(
@@ -31,6 +33,8 @@ Route::group(
         Route::get('/adverts/create/region/{category}/{region?}', 'Adverts\CreateController@region')->name('adverts.create.region');
         Route::get('/adverts/create/advert/{category}/{region?}', 'Adverts\CreateController@advert')->name('adverts.create.advert');
         Route::post('/adverts/create/store/{category}/{region?}', 'Adverts\CreateController@store')->name('adverts.create.store');
+        Route::post('/adverts/tomoderation/{advert}', 'Adverts\AdvertsController@tomoderation')->name('adverts.tomoderation');
+        Route::delete('/adverts/delete/{advert}', 'Adverts\AdvertsController@delete')->name('adverts.delete');
 
     }
 );

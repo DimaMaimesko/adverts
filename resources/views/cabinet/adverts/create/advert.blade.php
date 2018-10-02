@@ -68,7 +68,6 @@
             <div class="card-body pb-2">
 
                 @foreach ($category->allAttributes() as $attribute)
-{{--                    {{dd($attribute)}}--}}
                     <div class="form-group">
                         <label for=attribute_{{ $attribute->id }}" class="col-form-label">{{ $attribute->name }}</label>
 

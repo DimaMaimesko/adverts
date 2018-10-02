@@ -26,5 +26,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        Gate::define('manage-own-advert', function (User $user, Advert $advert){
+            return $advert->user_id === $user->id;
+        });
     }
 }

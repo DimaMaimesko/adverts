@@ -20,106 +20,106 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body id="app">
-    <header>
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<header>
+    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
 
-                    </ul>
+                </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                      @csrf
-                                    </form>
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
 
-                                    <a class="dropdown-item" href="{{ route('home') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('home').submit();">
-                                        {{ __('Home') }}
-                                    </a>
-                                    <form id="home" action="{{ route('home') }}" method="GET" style="display: none;">
-                                        @csrf
-                                    </form>
+                                <a class="dropdown-item" href="{{ route('adverts.index') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('adverts').submit();">
+                                    {{ __('Adverts') }}
+                                </a>
+                                <form id="adverts" action="{{ route('adverts.index') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
 
-                                    <a class="dropdown-item" href="{{ route('cabinet.profile.home') }}"
-                                       onclick="event.preventDefault();
+                                <a class="dropdown-item" href="{{ route('cabinet.profile.home') }}"
+                                   onclick="event.preventDefault();
                                                      document.getElementById('cabinet-form').submit();">
-                                        {{ __('Cabinet') }}
-                                    </a>
-                                    <form id="cabinet-form" action="{{ route('cabinet.profile.home') }}" method="GET" style="display: none;">
-                                        @csrf
-                                    </form>
+                                    {{ __('Cabinet') }}
+                                </a>
+                                <form id="cabinet-form" action="{{ route('cabinet.profile.home') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
 
-                                    <a class="dropdown-item" href="{{ route('admin.home') }}"
-                                       onclick="event.preventDefault();
+                                <a class="dropdown-item" href="{{ route('admin.home') }}"
+                                   onclick="event.preventDefault();
                                                      document.getElementById('admin-form').submit();">
-                                        {{ __('Admin') }}
-                                    </a>
-                                    <form id="admin-form" action="{{ route('admin.home') }}" method="GET" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="app-content py-4">
-        <div class="container">
-         @if(Breadcrumbs::exists())
-           @section('breadcrumbs')
-              {!! Breadcrumbs::render() !!}
-           @show
-         @endif
-         @include('layouts.elements.flash')
-         @include('flash::message')
-         @yield('content')
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="border-top pt-3">
-                <p>&copy; {{ date('Y') }} - Adverts</p>
+                                    {{ __('Admin') }}
+                                </a>
+                                <form id="admin-form" action="{{ route('admin.home') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                </ul>
             </div>
         </div>
-    </footer>
+    </nav>
+</header>
 
-    {{--Scripts--}}
-    @yield('scripts')
+<main class="app-content py-4">
+    <div class="container">
+        @if(Breadcrumbs::exists())
+        @section('breadcrumbs')
+            {!! Breadcrumbs::render() !!}
+        @show
+        @endif
+        @include('layouts.elements.flash')
+        @include('flash::message')
+        @yield('content')
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="border-top pt-3">
+            <p>&copy; {{ date('Y') }} - Adverts</p>
+        </div>
+    </div>
+</footer>
+
+{{--Scripts--}}
+@yield('scripts')
 
 </body>
 </html>

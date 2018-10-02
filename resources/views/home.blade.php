@@ -1,50 +1,96 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
+    <title>Laravel</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-<h1>Hello from HOME!</h1>
+    <!-- Styles -->
+    <style>
+        html, body {
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 100vh;
+            margin: 0;
+        }
 
-<div class="card card-default mb-3">
-    <div class="card-header">
-        All Categories
-    </div>
-    <div class="card-body pb-0" style="color: #aaa">
-        <div class="row">
-            @foreach (array_chunk($categories, 3) as $chunk)
-                <div class="col-md-3">
-                    <ul class="list-unstyled">
-                        @foreach ($chunk as $current)
-{{--                            <li><a href="{{ route('adverts.index', adverts_path(null, $current)) }}">{{ $current->name }}</a></li>--}}
-                            <li>{{ $current->name }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endforeach
+        .full-height {
+            height: 100vh;
+        }
+
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .position-ref {
+            position: relative;
+        }
+
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 84px;
+        }
+
+        .links > a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="flex-center position-ref full-height">
+    @if (Route::has('login'))
+        <div class="top-right links">
+            @auth
+                <a href="{{ route('cabinet.profile.home') }}">Cabinet</a>
+                <a href="{{ route('admin.home') }}">Admin</a>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('register') }}">Register</a>
+            @endauth
+        </div>
+    @endif
+
+    <div class="content">
+        <div class="title m-b-md">
+            Laravel
+        </div>
+
+        <div class="links">
+            <a href="https://laravel.com/docs">Documentation</a>
+            <a href="https://laracasts.com">Laracasts</a>
+            <a href="https://laravel-news.com">News</a>
+            <a href="https://nova.laravel.com">Nova</a>
+            <a href="https://forge.laravel.com">Forge</a>
+            <a href="https://github.com/laravel/laravel">GitHub</a>
         </div>
     </div>
 </div>
-
-<div class="card card-default mb-3">
-    <div class="card-header">
-        All Regions
-    </div>
-    <div class="card-body pb-0" style="color: #aaa">
-        <div class="row">
-            @foreach (array_chunk($regions, 3) as $chunk)
-                <div class="col-md-3">
-                    <ul class="list-unstyled">
-                        @foreach ($chunk as $current)
-                            {{--<li><a href="{{ route('adverts.index', adverts_path($current, null)) }}">{{ $current->name }}</a></li>--}}
-                            <li>{{ $current->name }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
-
-
-
-@endsection
+</body>
+</html>

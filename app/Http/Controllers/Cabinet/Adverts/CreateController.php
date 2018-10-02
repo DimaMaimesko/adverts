@@ -58,8 +58,10 @@ class CreateController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back(    );
+        return redirect()->route('cabinet.adverts.home')->with('success', 'New advert created!');
     }
+
+
 
 
 }
