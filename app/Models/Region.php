@@ -34,5 +34,10 @@ class Region extends Model
     public function scopeRoots(Builder $query){
         return $query->where('parent_id', null);
     }
+    public function getPath(): string
+    {
+        return ($this->parent ? $this->parent->getPath() . '/' : '') . $this->slug;
+    }
+
 
 }

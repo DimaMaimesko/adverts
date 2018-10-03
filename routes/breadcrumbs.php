@@ -1,4 +1,5 @@
 <?php
+use App\Http\Router\AdvertsPath;
 
 Breadcrumbs::register('home', function ( $crumbs) {
     $crumbs->push('Home', route('home'));
@@ -174,4 +175,39 @@ Breadcrumbs::register('cabinet.profile.edit', function ( $crumbs) {
 Breadcrumbs::register('cabinet.profile.phone', function ( $crumbs) {
     $crumbs->parent('cabinet.profile.home');
     $crumbs->push('Phone', route('cabinet.profile.phone'));
+});
+
+// Adverts
+
+Breadcrumbs::register('adverts.inner_region', function ( $crumbs, AdvertsPath $path) {
+    if ($path->region && $parent = $path->region->parent) {
+        $crumbs->parent('adverts.inner_region', $path->withRegion($parent));
+    } else {
+        $crumbs->parent('home');
+        $crumbs->push('Adverts', route('adverts.index'));
+    }
+    if ($path->region) {
+        $crumbs->push($path->region->name, route('adverts.index', $path));
+    }
+});
+
+Breadcrumbs::register('adverts.inner_category', function ( $crumbs, AdvertsPath $path, AdvertsPath $orig) {
+    if ($path->category && $parent = $path->category->parent) {
+        $crumbs->parent('adverts.inner_category', $path->withCategory($parent), $orig);
+    } else {
+        $crumbs->parent('adverts.inner_region', $orig);
+    }
+    if ($path->category) {
+        $crumbs->push($path->category->name, route('adverts.index', $path));
+    }
+});
+
+Breadcrumbs::register('adverts.index', function ( $crumbs, AdvertsPath $path = null) {
+    $path = $path ?: adverts_path(null, null);
+    $crumbs->parent('adverts.inner_category', $path, $path);
+});
+
+Breadcrumbs::register('adverts.show', function ( $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', adverts_path($advert->region, $advert->category));
+    $crumbs->push($advert->title, route('adverts.show', $advert));
 });

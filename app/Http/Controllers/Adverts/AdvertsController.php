@@ -5,6 +5,7 @@ use App\Models\Adverts\Advert;
 use App\Models\Region;
 use App\Models\Adverts\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Router\AdvertsPath;
 use App\Services\Advert\AdvertService;
 
 class AdvertsController extends Controller
@@ -16,32 +17,29 @@ class AdvertsController extends Controller
         $this->service = $service;
     }
 
-    public function index(Category $category = null, Region $region = null)
+
+    public function index( AdvertsPath $path )
     {
+        $query = Advert::with(['region','category'])->orderByDesc('published_at');
 
-//        if ($category){
-//            $query->forCategory($category);
-//        }
-//        if ($region){
-//            $query->forRegion($region);
-//        }
-
-
-        if ($category){
-            $categories = $category->children->toArray();
-        }else{
-            $categories = Category::whereIsRoot()->defaultOrder()->getModels();
+        if ($category = $path->category){
+            $query->forCategory($category);
         }
-        if ($region){
-            $regions = $region->children->toArray();;
-        }else{
-            $regions  = Region::roots()->orderBy('name')->getModels();
+        if ($region = $path->region){
+            $query->forRegion($region);
         }
 
-        $query = Advert::with(['region','category','user'])->orderByDesc('title');
+        $regions = $region
+            ? $region->children()->orderBy('name')->getModels()
+            : Region::roots()->orderBy('name')->getModels();
+
+        $categories = $category
+            ? $category->children()->defaultOrder()->getModels()
+            : Category::whereIsRoot()->defaultOrder()->getModels();
+
         $adverts = $query->get();
 
-        return view('adverts.index',compact(['regions', 'categories', 'adverts']));
+        return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts']));
     }
 
     public function show()

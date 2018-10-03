@@ -1,13 +1,13 @@
 <?php
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
 
 Auth::routes();
 
-Route::get('/{adverts_path?}', 'Adverts\AdvertsController@index')->name('index')->where('adverts_path', '.+');
+Route::get('/adverts/{adverts_path?}', 'Adverts\AdvertsController@index')->name('adverts.index')->where('adverts_path', '.+');
 
-//Route::get('/adverts/{category?}/{region?}', 'Adverts\AdvertsController@index')->name('adverts.index');
 Route::get('/adverts/show/{advert}', 'Adverts\AdvertsController@show')->name('adverts.show');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');

@@ -104,12 +104,18 @@ class Advert extends Model
 
     public function scopeForCategory(Builder $query, Category $category)
     {
-        return $query->where('category_id', $category->id);
+        return $query->whereIn('category_id', array_merge(
+            [$category->id], $category->descendants()->pluck('id')->toArray()));
     }
 
     public function scopeForRegion(Builder $query, Region $region)
     {
-        return $query->where('region_id', $region->id);
+        $ids = [$region->id];
+        $childrenIds = $ids;
+        while ($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
+            $ids = array_merge($ids, $childrenIds);
+        }
+        return $query->whereIn('region_id', $ids);
     }
 
     public function sendToModeration(){
@@ -143,6 +149,16 @@ class Advert extends Model
             'reject_reason' => $reason,
             'status' => self::STATUS_DRAFT,
         ]);
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }
