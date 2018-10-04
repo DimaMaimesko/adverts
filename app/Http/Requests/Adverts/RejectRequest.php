@@ -20,9 +20,9 @@ class RejectRequest extends FormRequest
 
     public function rules(): array
     {
+        return [
+            'reject_reason' => 'required|string',
 
-        return array_merge([
-            'reason' => 'required|string',
-            ]);
+        ];
     }
 }

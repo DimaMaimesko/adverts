@@ -68,26 +68,26 @@
                                     {{ __('Adverts') }}
                                 </a>
                                 <form id="adverts" action="{{ route('adverts.index') }}" method="GET" style="display: none;">
-                                    @csrf
+
                                 </form>
 
-                                <a class="dropdown-item" href="{{ route('cabinet.profile.home') }}"
+                                <a class="dropdown-item" href="{{ route('cabinet.home') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('cabinet-form').submit();">
                                     {{ __('Cabinet') }}
                                 </a>
-                                <form id="cabinet-form" action="{{ route('cabinet.profile.home') }}" method="GET" style="display: none;">
-                                    @csrf
-                                </form>
+                                <form id="cabinet-form" action="{{ route('cabinet.home') }}" method="GET" style="display: none;">
 
-                                <a class="dropdown-item" href="{{ route('admin.home') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('admin-form').submit();">
-                                    {{ __('Admin') }}
-                                </a>
-                                <form id="admin-form" action="{{ route('admin.home') }}" method="GET" style="display: none;">
-                                    @csrf
                                 </form>
+                                @can('access-admin')
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}"
+                                       onclick="event.preventDefault();
+                                                         document.getElementById('admin-form').submit();">
+                                        {{ __('Admin') }}
+                                    </a>
+                                    <form id="admin-form" action="{{ route('admin.home') }}" method="GET" style="display: none;">
+                                    </form>
+                                @endcan
                             </div>
                         </li>
                     @endguest

@@ -1,10 +1,11 @@
 <?php
-namespace App\Http\Controllers\Cabinet\Adverts;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Models\Adverts\Advert;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Advert\AdvertService;
+use App\Http\Requests\Adverts\RejectRequest;
 
 use Illuminate\Support\Facades\Request;
 
@@ -20,7 +21,7 @@ class AdvertsController extends Controller
     public function index()
     {
         $adverts = Advert::myAdverts()->paginate(10);
-        return view('cabinet.adverts.home', [
+        return view('admin.adverts.home', [
             'adverts' => $adverts,
         ]);
     }
@@ -29,6 +30,12 @@ class AdvertsController extends Controller
     {
         $this->service->sendToModeration($advert);
         return back();
+    }
+
+    public function show($advert)
+    {
+        $advert = Advert::find($advert);
+        return view('admin.adverts.show', compact('advert'));
     }
 
     public function edit($advert)
@@ -50,6 +57,23 @@ class AdvertsController extends Controller
         flash('Advert destroyed')->warning();
         return redirect()->route('cabinet.adverts.home');
     }
+
+    public function moderate($advert)
+    {
+      $advert = Advert::find($advert);
+      $advert->moderate(now());
+      return redirect()->route('admin.adverts.index')->with('success', 'Advert is activated!');
+    }
+
+    public function reject(RejectRequest $request, $advert)
+    {
+       $advert = Advert::find($advert);
+       $advert->reject( $request->input('reject_reason'));
+
+       return redirect()->route('admin.adverts.index')->with('warning', 'Advert is rejected!');
+    }
+
+
 
 
 

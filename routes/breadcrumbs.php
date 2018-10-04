@@ -1,5 +1,6 @@
 <?php
 use App\Http\Router\AdvertsPath;
+use App\Models\Adverts\Advert;
 
 Breadcrumbs::register('home', function ( $crumbs) {
     $crumbs->push('Home', route('home'));
@@ -29,10 +30,26 @@ Breadcrumbs::register('password.reset', function ($crumbs) {
     $crumbs->parent('password.request');
     $crumbs->push('Change', route('password.reset'));
 });
+
+//ADMIN Adverts
+
+Breadcrumbs::register('admin.home', function ( $crumbs) {
+    $crumbs->push('Admin', route('admin.home'));
+});
+
+Breadcrumbs::register('admin.adverts.index', function ($crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Adverts', route('admin.adverts.index'));
+});
+Breadcrumbs::register('admin.adverts.show', function ($crumbs, $advert) {
+    $crumbs->parent('admin.adverts.index');
+    $crumbs->push('Show', route('admin.adverts.show', $advert));
+});
+
 // Users
 
 Breadcrumbs::register('admin.users.index', function ($crumbs) {
-    $crumbs->parent('home');
+    $crumbs->parent('admin.home');
     $crumbs->push('Users', route('admin.users.index'));
 });
 
@@ -52,7 +69,7 @@ Breadcrumbs::register('admin.users.edit', function ($crumbs, $user) {
 });
 //Permissions
 Breadcrumbs::register('admin.permissions.index', function( $crumbs){
-    $crumbs->parent('home');
+    $crumbs->parent('admin.home');
     $crumbs->push('Permissions', route('admin.permissions.index'));
 });
 
@@ -73,7 +90,7 @@ Breadcrumbs::register('admin.permissions.show', function( $crumbs, $id){
 
 //Roles
 Breadcrumbs::register('admin.roles.index', function( $crumbs){
-    $crumbs->parent('home');
+    $crumbs->parent('admin.home');
     $crumbs->push('Roles', route('admin.roles.index'));
 });
 
@@ -95,7 +112,7 @@ Breadcrumbs::register('admin.roles.show', function( $crumbs, $id){
 // Regions
 
 Breadcrumbs::register('admin.regions.index', function ($crumbs) {
-    $crumbs->parent('home');
+    $crumbs->parent('admin.home');
     $crumbs->push('Regions', route('admin.regions.index'));
 });
 
@@ -121,7 +138,7 @@ Breadcrumbs::register('admin.regions.edit', function ($crumbs, $region) {
 // Categories
 
 Breadcrumbs::register('admin.categories.index', function ($crumbs) {
-    $crumbs->parent('home');
+    $crumbs->parent('admin.home');
     $crumbs->push('Categories', route('admin.categories.index'));
 });
 
@@ -162,8 +179,12 @@ Breadcrumbs::register('admin.categories.attributes.edit', function ( $crumbs,  $
 });
 
 // Cabinet
+Breadcrumbs::register('cabinet.home', function ( $crumbs) {
+    $crumbs->push('Cabinet', route('cabinet.home'));
+});
 
 Breadcrumbs::register('cabinet.profile.home', function ( $crumbs) {
+    $crumbs->parent('cabinet.home');
     $crumbs->push('Profile', route('cabinet.profile.home'));
 });
 
@@ -173,8 +194,18 @@ Breadcrumbs::register('cabinet.profile.edit', function ( $crumbs) {
 });
 
 Breadcrumbs::register('cabinet.profile.phone', function ( $crumbs) {
-    $crumbs->parent('cabinet.profile.home');
+    $crumbs->parent('cabinet.home');
     $crumbs->push('Phone', route('cabinet.profile.phone'));
+});
+
+Breadcrumbs::register('cabinet.adverts.home', function ( $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Adverts', route('cabinet.adverts.home'));
+});
+
+Breadcrumbs::register('cabinet.adverts.edit', function ( $crumbs, $advert) {
+    $crumbs->parent('cabinet.adverts.home');
+    $crumbs->push('Edit', route('cabinet.adverts.edit',  $advert));
 });
 
 // Adverts
@@ -183,7 +214,7 @@ Breadcrumbs::register('adverts.inner_region', function ( $crumbs, AdvertsPath $p
     if ($path->region && $parent = $path->region->parent) {
         $crumbs->parent('adverts.inner_region', $path->withRegion($parent));
     } else {
-        $crumbs->parent('home');
+        $crumbs->parent('cabinet.home');
         $crumbs->push('Adverts', route('adverts.index'));
     }
     if ($path->region) {

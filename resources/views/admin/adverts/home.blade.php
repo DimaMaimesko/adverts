@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('admin._nav')
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -20,7 +20,7 @@
         @foreach ($adverts as $advert)
             <tr>
                 <td>{{ $advert->id }}</td>
-                <td><a href="{{ route('cabinet.adverts.edit', $advert->id) }}">{{ $advert->title }}</a></td>
+                <td><a href="{{ route('admin.adverts.show', $advert->id) }}">{{ $advert->title }}</a></td>
                 <td>{{ $advert->content }}</td>
                 <td>
                     @if ($advert->isDraft())

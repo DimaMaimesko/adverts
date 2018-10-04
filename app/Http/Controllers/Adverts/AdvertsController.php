@@ -20,7 +20,7 @@ class AdvertsController extends Controller
 
     public function index( AdvertsPath $path )
     {
-        $query = Advert::with(['region','category'])->orderByDesc('published_at');
+        $query = Advert::with(['region','category'])->active()->orderByDesc('published_at');
 
         if ($category = $path->category){
             $query->forCategory($category);
@@ -42,8 +42,13 @@ class AdvertsController extends Controller
         return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts']));
     }
 
-    public function show()
+    public function show(Advert $advert)
     {
+        //dump(Auth::user()->hasPermissionTo('edit admins'));
+        $advert = Advert::find($advert->id);
+        return view('adverts.show',[
+            'advert' => $advert,
+        ]);
 
     }
 

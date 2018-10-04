@@ -45,6 +45,10 @@
 	        Permission::create(['name' => 'seo']);
 
 	        Permission::create(['name' => 'set roles']);
+	        Permission::create(['name' => 'access-admin']);
+	        Permission::create(['name' => 'manage-own-advert']);
+	        Permission::create(['name' => 'moderate-advert']);
+	        Permission::create(['name' => 'set roles']);
 
 	        $role = Role::create(['name' => User::SUPERADMIN]);
 	        $role->givePermissionTo(Permission::all());

@@ -53,7 +53,7 @@
                     <div class="col-md-9">
                         <span class="float-right">{{ $advert->price }}</span>
                         <div class="h4" style="margin-top: 0"><a
-                                    href="{{ route('adverts.show', $advert) }}">{{ $advert->title }}</a></div>
+                                    href="{{ route('adverts.show', $advert->id) }}">{{ $advert->title }}</a></div>
                         <p>Region: <a href="">{{ $advert->region ? $advert->region->name : 'All' }}</a></p>
                         <p>Category: <a href="">{{ $advert->category->name }}</a></p>
                         <p>Creator: <a href="">{{ $advert->user->name }}</a></p>

@@ -97,6 +97,16 @@ class Advert extends Model
         return $this->status === self::STATUS_CLOSED;
     }
 
+    public function scopeActive()
+    {
+        return $this->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeOnModeration()
+    {
+        return $this->where('status', self::STATUS_MODERATION);
+    }
+
     public function scopeMyAdverts()
     {
         return $this->where('user_id', Auth::id())->orderByDesc('updated_at');
@@ -131,7 +141,7 @@ class Advert extends Model
     }
 
     public function moderate(Carbon $date){
-        if (!$this->isOnModeration()){
+        if (!$this->isDraft()){
             throw new \DomainException('The advert should have moderation status');
         }
         $this->update([
@@ -151,14 +161,6 @@ class Advert extends Model
         ]);
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+
 
 }

@@ -6,9 +6,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/adverts/{adverts_path?}', 'Adverts\AdvertsController@index')->name('adverts.index')->where('adverts_path', '.+');
 
 Route::get('/adverts/show/{advert}', 'Adverts\AdvertsController@show')->name('adverts.show');
+Route::get('/adverts/{adverts_path?}', 'Adverts\AdvertsController@index')->name('adverts.index')->where('adverts_path', '.+');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');
 Route::group(
@@ -19,7 +19,7 @@ Route::group(
         'middleware' => ['auth'],
     ],
     function (){
-//        Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/', 'HomeController@index')->name('home');
         Route::group(['prefix' => 'profile', 'as' => 'profile.'], function(){
             Route::get('/', 'ProfileController@index')->name('home');
             Route::get('/edit', 'ProfileController@edit')->name('edit');
@@ -35,6 +35,10 @@ Route::group(
         Route::post('/adverts/create/store/{category}/{region?}', 'Adverts\CreateController@store')->name('adverts.create.store');
         Route::post('/adverts/tomoderation/{advert}', 'Adverts\AdvertsController@tomoderation')->name('adverts.tomoderation');
         Route::delete('/adverts/delete/{advert}', 'Adverts\AdvertsController@delete')->name('adverts.delete');
+
+        Route::get('/adverts/edit/{advert}', 'Adverts\AdvertsController@edit')->name('adverts.edit');
+        Route::post('/adverts/update/{advert}', 'Adverts\AdvertsController@update')->name('adverts.update');
+
 
     }
 );
@@ -66,6 +70,13 @@ Route::group(
             Route::post('/down',  'CategoriesController@down')->name('down');
             Route::post('/last',  'CategoriesController@last')->name('last');
             Route::resource('attributes', 'AttributesController')->except('index');
+        });
+        Route::group(['prefix' => 'adverts',  'as' => 'adverts.'], function () {
+            Route::get('/index', 'AdvertsController@index')->name('index');
+            Route::get('/show/{advert}', 'AdvertsController@show')->name('show');
+            Route::post('/moderate/{advert}', 'AdvertsController@moderate')->name('moderate');
+            Route::post('/reject/{advert}', 'AdvertsController@reject')->name('reject');
+
         });
 
 
