@@ -97,6 +97,11 @@ class AdvertService
         $advert->sendToModeration();
     }
 
+    public function  expire(Advert $advert)
+    {
+        $advert->expire();
+    }
+
     public function  moderate($id)
     {
         $advert = $this->getAdvert($id);
