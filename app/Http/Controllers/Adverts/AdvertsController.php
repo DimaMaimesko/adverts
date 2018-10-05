@@ -38,16 +38,19 @@ class AdvertsController extends Controller
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
         $adverts = $query->get();
+        $user = Auth::user();
 
-        return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts']));
+        return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts', 'user']));
     }
 
     public function show(Advert $advert)
     {
         //dump(Auth::user()->hasPermissionTo('edit admins'));
         $advert = Advert::find($advert->id);
+        $user = Auth::user();
         return view('adverts.show',[
             'advert' => $advert,
+            'user' => $user,
         ]);
 
     }

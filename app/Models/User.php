@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Carbon\Carbon;
+use App\Models\Adverts\Advert;
 /**
  * @property int $id
  * @property string $name
@@ -109,6 +110,29 @@ class User extends Authenticatable
     public function isPhoneVerified(): bool
     {
         return $this->phone_verified;
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
+    }
+
+    public function addToFavorites($id): void
+    {
+        if ($this->hasInFavorites($id)) {
+            throw new \DomainException('This advert is already added to favorites.');
+        }
+        $this->favorites()->attach($id);
+    }
+
+    public function removeFromFavorites($id): void
+    {
+        $this->favorites()->detach($id);
+    }
+
+    public function hasInFavorites($id): bool
+    {
+        return $this->favorites()->where('id', $id)->exists();
     }
 
 }

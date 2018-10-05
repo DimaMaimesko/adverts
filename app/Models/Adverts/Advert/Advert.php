@@ -167,6 +167,18 @@ class Advert extends Model
         ]);
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'advert_favorites', 'advert_id', 'user_id');
+    }
+
+    public function scopeFavoredByUser(Builder $query, User $user)
+    {
+        return $query->whereHas('favorites', function(Builder $query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
+    }
+
 
 
 }

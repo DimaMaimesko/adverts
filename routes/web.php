@@ -39,6 +39,10 @@ Route::group(
         Route::get('/adverts/edit/{advert}', 'Adverts\AdvertsController@edit')->name('adverts.edit');
         Route::post('/adverts/update/{advert}', 'Adverts\AdvertsController@update')->name('adverts.update');
 
+        Route::get('/favorites', 'FavoriteController@index')->name('favorites.home');
+        Route::post('/favorites/{advert}', 'FavoriteController@add')->name('favorites.add');
+        Route::delete('/favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
+
 
     }
 );

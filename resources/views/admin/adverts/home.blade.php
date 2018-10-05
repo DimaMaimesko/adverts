@@ -40,13 +40,13 @@
                 <td>{{ $advert->expires_at  }}</td>
                 <td>
                     <div class="d-flex flex-row pull-right">
-                        @if (!$advert->isOnModeration())
+                        {{--@if ($advert->isDraft())--}}
 
-                            <form method="POST" action="{{ route('cabinet.adverts.tomoderation', $advert) }}" class="mr-1">
-                                @csrf
-                                <button class="btn btn-sm btn-outline-warning">To moderation</button>
-                            </form>
-                        @endif
+                            {{--<form method="POST" action="{{ route('cabinet.adverts.tomoderation', $advert) }}" class="mr-1">--}}
+                                {{--@csrf--}}
+                                {{--<button class="btn btn-sm btn-outline-warning">To moderation</button>--}}
+                            {{--</form>--}}
+                        {{--@endif--}}
                             <form method="POST" action="{{ route('cabinet.adverts.delete', $advert) }}" data-confirm="Do you want to delete advert {{$advert->title}}?" class="mr-1">
                                 <input type="hidden" name="_method" value="delete" />
                                 @csrf
