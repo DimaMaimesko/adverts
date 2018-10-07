@@ -95,6 +95,10 @@
             </div>
         </div>
     </nav>
+    @section('search')
+{{--        @include('layouts.partials.search', ['category' => null, 'route' => route('adverts.index')])--}}
+        @include('layouts.elements.search')
+    @show
 </header>
 
 <main class="app-content py-4">

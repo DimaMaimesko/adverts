@@ -5,7 +5,8 @@ namespace App\Providers;
 use App\Services\Sms\Nexmo;
 use App\Services\Sms\SmsSender;
 use Illuminate\Support\ServiceProvider;
-
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SmsSender::class, function ($app){
             $config = $app->make('config')->get('sms');
             return new Nexmo($config);
+        });
+
+        $this->app->singleton(Client::class, function ($app) {
+            $config = $app->make('config')->get('elasticsearch');
+            return ClientBuilder::create()
+                ->setHosts($config['hosts'])
+                ->setRetries($config['retries'])
+                ->build();
         });
     }
 }

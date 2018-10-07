@@ -141,7 +141,7 @@ class Advert extends Model
     }
 
     public function moderate(Carbon $date){
-        if (!$this->isDraft()){
+        if (!$this->isOnModeration()){
             throw new \DomainException('The advert should have moderation status');
         }
         $this->update([
@@ -177,6 +177,16 @@ class Advert extends Model
         return $query->whereHas('favorites', function(Builder $query) use ($user) {
             $query->where('user_id', $user->id);
         });
+    }
+
+    public function getValue($id)
+    {
+        foreach ($this->values as $value) {
+            if ($value->attribute_id === $id) {
+                return $value->value;
+            }
+        }
+        return null;
     }
 
 
