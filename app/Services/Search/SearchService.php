@@ -13,9 +13,8 @@ use App\Models\Adverts\Category;
 use App\Models\Region;
 use Elasticsearch\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Query\Expression;
-
+use App\Services\Search\SearchResult;
 class SearchService
 {
     private $client;
@@ -25,10 +24,9 @@ class SearchService
         $this->client = $client;
     }
 
-    public function search(?Category $category,?Region $region, SearchRequest $request, int $perPage, int $page): LengthAwarePaginator
+    public function search(?Category $category,?Region $region, SearchRequest $request, int $perPage, int $page): SearchResult
     {
 
-       // dd($request->input());
         $values = array_filter((array)$request->input('attrs'), function ($value) {
             return !empty($value['equals']) || !empty($value['from']) || !empty($value['to']);
         });
@@ -44,9 +42,9 @@ class SearchService
                     ['published_at' => ['order' => 'desc']],
                 ] : [],
                 'aggs' => [
-                    'group_by_region' => [
+                    'group_by_region' => [//название аггрегата
                         'terms' => [
-                            'field' => 'regions',
+                            'field' => 'regions',//по каким полям ищем(агрегируем)
                         ],
                     ],
                     'group_by_category' => [
@@ -93,18 +91,25 @@ class SearchService
                 ]
             ]
         ]);
-        $ids = array_column($response['hits']['hits'], '_id');
-        if (!$ids){
-            return new LengthAwarePaginator([], 0, $perPage, $page);
-        }
-        //dd($ids);
-        $items = Advert::active()
-            ->with(['category', 'region'])
-            ->whereIn('id', $ids)//new Expression для того чтобы строка не экранировалась
-            ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))//выводим в том порядке, в каком получили айдишники из ES
-            ->get();
-        return new LengthAwarePaginator($items, $response['hits']['total'], $perPage, $page);
 
+        $ids = array_column($response['hits']['hits'], '_id');
+
+        if (!$ids){
+            $pagination =  new LengthAwarePaginator([], 0, $perPage, $page);
+        }else{
+            $items = Advert::active()
+                ->with(['category', 'region'])
+                ->whereIn('id', $ids)//new Expression для того чтобы строка не экранировалась
+                ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))//выводим в том порядке, в каком получили айдишники из ES
+                ->get();
+            $pagination =  new LengthAwarePaginator($items, $response['hits']['total'], $perPage, $page);
+        }
+
+        return new SearchResult(
+            $pagination,
+            array_column($response['aggregations']['group_by_region']['buckets'], 'doc_count', 'key'),
+            array_column($response['aggregations']['group_by_category']['buckets'], 'doc_count', 'key')
+        );
     }
 
 }

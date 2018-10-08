@@ -214,7 +214,7 @@ Breadcrumbs::register('adverts.inner_region', function ( $crumbs, AdvertsPath $p
     if ($path->region && $parent = $path->region->parent) {
         $crumbs->parent('adverts.inner_region', $path->withRegion($parent));
     } else {
-        $crumbs->parent('cabinet.home');
+        $crumbs->parent('home');
         $crumbs->push('Adverts', route('adverts.index'));
     }
     if ($path->region) {

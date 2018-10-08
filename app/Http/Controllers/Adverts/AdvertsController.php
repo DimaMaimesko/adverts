@@ -48,12 +48,8 @@ class AdvertsController extends Controller
 
     public function index( SearchRequest $request, AdvertsPath $path )
     {
-//
         $region = $path->region;
         $category = $path->category;
-        //dd($request->text);
-        $result = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
-        //dd( $result->items());
 
         $regions = $region
             ? $region->children()->orderBy('name')->getModels()
@@ -63,11 +59,18 @@ class AdvertsController extends Controller
             ? $category->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
-        $adverts = $result->items();
+        $result = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
 
+        $adverts = $result->adverts;
+        $regionsCounts = $result->regionsCounts;
+        $categoriesCounts = $result->categoriesCounts;
         $user = Auth::user();
-//        dd($path);
-        return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts', 'user']));
+        return view('adverts.index',compact([
+            'category','region',
+            'regionsCounts', 'categoriesCounts',
+            'regions', 'categories',
+            'adverts',
+            'user']));
     }
 
     public function show(Advert $advert)
