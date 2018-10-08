@@ -8,6 +8,7 @@ Auth::routes();
 
 
 Route::get('/adverts/show/{advert}', 'Adverts\AdvertsController@show')->name('adverts.show');
+//Route::get('/adverts/search/{adverts_path?}', 'Adverts\AdvertsController@search')->name('adverts.search')->where('adverts_path', '.+');
 Route::get('/adverts/{adverts_path?}', 'Adverts\AdvertsController@index')->name('adverts.index')->where('adverts_path', '.+');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');

@@ -15,7 +15,7 @@
                     <div class="col-md-3">
                         <ul class="list-unstyled">
                             @foreach ($chunk as $current)
-                                <li><a href="{{ route('adverts.index', adverts_path($region, $current)) }}">{{ $current['name'] }}</a></li>
+                                <li><a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($region, $current)],request()->all()) )}}">{{ $current['name'] }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="col-md-3">
                         <ul class="list-unstyled">
                             @foreach ($chunk as $current)
-                                <li><a href="{{ route('adverts.index', adverts_path($current, $category)) }}">{{ $current->name }}</a></li>
+                                <li><a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($current, $category)],request()->all())) }}">{{ $current->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -54,6 +54,7 @@
                         <span class="float-right">{{ $advert->price }}</span>
                         <div class="h4" style="margin-top: 0"><a
                                     href="{{ route('adverts.show', $advert->id) }}">{{ $advert->title }}</a></div>
+                        <p>Content: {{  substr($advert->content, 0,25)}}...</p>
                         <p>Region: <a href="">{{ $advert->region ? $advert->region->name : 'All' }}</a></p>
                         <p>Category: <a href="">{{ $advert->category->name }}</a></p>
                         <p>Creator: <a href="">{{ $advert->user->name }}</a></p>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form action="" method="GET">
+                    <form action="{{route('adverts.index')}}" method="GET">
                         <div class="row">
                             <div class="col-md-11">
                                 <div class="form-group">
