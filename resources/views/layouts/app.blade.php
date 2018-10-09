@@ -96,8 +96,7 @@
         </div>
     </nav>
     @section('search')
-{{--        @include('layouts.partials.search', ['category' => null, 'route' => route('adverts.index')])--}}
-        @include('layouts.elements.search')
+        @include('layouts.elements.search', ['category' => null, 'route' => route('adverts.index')])
     @show
 </header>
 

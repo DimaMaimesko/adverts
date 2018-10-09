@@ -91,7 +91,7 @@ class SearchService
                 ]
             ]
         ]);
-
+//dd($response);
         $ids = array_column($response['hits']['hits'], '_id');
 
         if (!$ids){

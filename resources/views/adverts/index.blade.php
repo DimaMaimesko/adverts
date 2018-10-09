@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+@section('search')
+    @include('layouts.elements.search', ['category' => $category, 'route' => '?'])
+@endsection
 
     <h1>Hello from Adverts!</h1>
 

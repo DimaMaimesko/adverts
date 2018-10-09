@@ -65,6 +65,7 @@ class AdvertsController extends Controller
         $regionsCounts = $result->regionsCounts;
         $categoriesCounts = $result->categoriesCounts;
         $user = Auth::user();
+
         return view('adverts.index',compact([
             'category','region',
             'regionsCounts', 'categoriesCounts',
