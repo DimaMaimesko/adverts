@@ -25,7 +25,7 @@ class UsersCreateValidation extends FormRequest
     {
         return [
            'name' => 'required|string|max:100|min:3',
-           'email' => 'required|string|email|max:100|unique:users',
+           'email' => 'string|email|max:100|unique:users',
         ];
     }
 }

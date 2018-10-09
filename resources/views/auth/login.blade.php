@@ -63,6 +63,12 @@
                         </div>
                     </form>
                 </div>
+                <div class="panel-footer">
+                    <a href="{{ route('facebookauth','facebook') }}" class="btn btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i>
+                        Login with Facebook
+                    </a>
+                </div>
             </div>
         </div>
     </div>

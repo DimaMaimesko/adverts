@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'host' => env('ELASTICSEARCH_HOST'),
+    'hosts' => [env('ELASTICSEARCH_HOST')],
     'retries' => 1,
 ];

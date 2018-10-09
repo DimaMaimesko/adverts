@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SocialAccount;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -133,6 +134,10 @@ class User extends Authenticatable
     public function hasInFavorites($id): bool
     {
         return $this->favorites()->where('id', $id)->exists();
+    }
+
+    public function accounts(){
+        return $this->hasMany(SocialAccount::class);
     }
 
 }
