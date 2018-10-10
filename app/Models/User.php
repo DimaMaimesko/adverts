@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Carbon\Carbon;
 use App\Models\Adverts\Advert;
+use Illuminate\Database\Eloquent\Builder;
 /**
  * @property int $id
  * @property string $name
@@ -138,6 +139,31 @@ class User extends Authenticatable
 
     public function accounts(){
         return $this->hasMany(SocialAccount::class);
+    }
+
+    public function scopeByProvider(Builder $query, string $provider, string $identity): Builder
+    {
+        return $query->whereHas('accounts', function(Builder $query) use ($provider, $identity) {
+            $query->where('provider_name', $provider)->where('provider_id', $identity);
+        });
+    }
+
+    public static function registerByProvider(string $provider,  $identity): self
+    {
+        $user = static::create([
+            'name' => $identity->getName(),
+            'email' => null,
+            'password' => null,
+            'verify_token' => null,
+            'role' => self::USER,
+            'status' => self::STATUS_ACTIVE,
+        ]);
+
+        $user->accounts()->create([
+            'provider_name' => $provider,
+            'provider_id' => $identity->getId()
+        ]);
+        return $user;
     }
 
 }
