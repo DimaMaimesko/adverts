@@ -21,6 +21,51 @@ class AdvertsController extends Controller
     }
 
 
+    public function index(SearchRequest $request, AdvertsPath $path)
+    {
+        $region = $path->region;
+        $category = $path->category;
+
+        $regions = $region
+            ? $region->children()->orderBy('name')->getModels()
+            : Region::roots()->orderBy('name')->getModels();
+
+        $categories = $category
+            ? $category->children()->defaultOrder()->getModels()
+            : Category::whereIsRoot()->defaultOrder()->getModels();
+
+        $result = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
+
+        $adverts = $result->adverts;
+        $regionsCounts = $result->regionsCounts;
+        $categoriesCounts = $result->categoriesCounts;
+        $user = Auth::user();
+
+        return view('adverts.index', compact([
+            'category', 'region',
+            'regionsCounts', 'categoriesCounts',
+            'regions', 'categories',
+            'adverts',
+            'user']));
+    }
+
+    public function show(Advert $advert)
+    {
+        //dump(Auth::user()->hasPermissionTo('edit admins'));
+        $advert = Advert::find($advert->id);
+        $user = Auth::user();
+        return view('adverts.show', [
+            'advert' => $advert,
+            'user' => $user,
+        ]);
+
+    }
+}
+
+
+
+
+
 //    public function index( AdvertsPath $path )
 //    {
 //dd($path);
@@ -46,48 +91,6 @@ class AdvertsController extends Controller
 //        return view('adverts.index',compact(['category','region','regions', 'categories', 'adverts', 'user']));
 //    }
 
-    public function index( SearchRequest $request, AdvertsPath $path )
-    {
-        $region = $path->region;
-        $category = $path->category;
-
-        $regions = $region
-            ? $region->children()->orderBy('name')->getModels()
-            : Region::roots()->orderBy('name')->getModels();
-
-        $categories = $category
-            ? $category->children()->defaultOrder()->getModels()
-            : Category::whereIsRoot()->defaultOrder()->getModels();
-
-        $result = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
-
-        $adverts = $result->adverts;
-        $regionsCounts = $result->regionsCounts;
-        $categoriesCounts = $result->categoriesCounts;
-        $user = Auth::user();
-
-        return view('adverts.index',compact([
-            'category','region',
-            'regionsCounts', 'categoriesCounts',
-            'regions', 'categories',
-            'adverts',
-            'user']));
-    }
-
-    public function show(Advert $advert)
-    {
-        //dump(Auth::user()->hasPermissionTo('edit admins'));
-        $advert = Advert::find($advert->id);
-        $user = Auth::user();
-        return view('adverts.show',[
-            'advert' => $advert,
-            'user' => $user,
-        ]);
-
-    }
 
 
 
-
-
-}

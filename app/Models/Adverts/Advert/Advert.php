@@ -71,10 +71,10 @@ class Advert extends Model
         return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
-    public function photos()
-    {
-        return $this->hasMany(Photo::class, 'advert_id', 'id');
-    }
+//    public function photos()
+//    {
+//        return $this->hasMany(Photo::class, 'advert_id', 'id');
+//    }
 
 
     public function isDraft(): bool

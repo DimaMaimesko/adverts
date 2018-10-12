@@ -43,7 +43,7 @@ class RegisterController extends Controller
             'status' => User::STATUS_WAIT,
         ]);
 
-        Mail::to($user->email)->send(new VerifyMail($user));
+        //Mail::to($user->email)->send(new VerifyMail($user));
         return $user;
     }
 

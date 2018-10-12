@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Carbon\Carbon;
 use App\Models\Adverts\Advert;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Passport\HasApiTokens;
 /**
  * @property int $id
  * @property string $name
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Builder;
 class User extends Authenticatable
 {
     use Notifiable, HasRoles;
+    use HasApiTokens;
 
     public const STATUS_WAIT = "wait";
     public const STATUS_ACTIVE = "active";
@@ -43,7 +45,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', "verify_token"
     ];
 
     protected $casts = [

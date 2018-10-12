@@ -7,6 +7,7 @@ use App\Services\Sms\SmsSender;
 use Illuminate\Support\ServiceProvider;
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
+use Laravel\Passport\Passport;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -39,5 +40,7 @@ class AppServiceProvider extends ServiceProvider
                 ->setRetries($config['retries'])
                 ->build();
         });
+
+        Passport::ignoreMigrations();
     }
 }
