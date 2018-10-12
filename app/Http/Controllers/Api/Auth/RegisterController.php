@@ -46,7 +46,17 @@ class RegisterController extends Controller
         //Mail::to($user->email)->send(new VerifyMail($user));
         return $user;
     }
-
+    /**
+     * @SWG\Post(
+     *     path="/register",
+     *     tags={"Profile"},
+     *     @SWG\Parameter(name="body", in="body", required=true, @SWG\Schema(ref="#/definitions/RegisterRequest")),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success response",
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
@@ -58,7 +68,16 @@ class RegisterController extends Controller
 
 
     }
-
+    /**
+     * @SWG\Definition(
+     *     definition="RegisterRequest",
+     *     type="object",
+     *     @SWG\Property(property="name", type="string"),
+     *     @SWG\Property(property="email", type="string"),
+     *     @SWG\Property(property="password", type="string"),
+     *     @SWG\Property(property="password_confirmation", type="string"),
+     * )
+     */
 
 
 
