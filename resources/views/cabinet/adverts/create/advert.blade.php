@@ -33,9 +33,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address" class="col-form-label">Address</label>
+
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-10">
+                            <label for="address" class="col-form-label">Address</label>
                             <input id="address" type="text"
                                    class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
                                    name="address"
@@ -45,7 +46,8 @@
                                 <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
                             @endif
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
+                            <label for="address" class="col-form-label">Locate me</label>
                             <span class="btn btn-primary btn-block location-button" data-target="#address"><span class="fa fa-location-arrow"></span></span>
                         </div>
                     </div>
