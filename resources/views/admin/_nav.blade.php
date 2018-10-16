@@ -6,4 +6,5 @@
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.regions.index') }}">Regions</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('admin.adverts.index') }}">Adverts</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('admin.pages.index') }}">Pages</a></li>
 </ul>

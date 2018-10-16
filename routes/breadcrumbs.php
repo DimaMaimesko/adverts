@@ -31,6 +31,15 @@ Breadcrumbs::register('password.reset', function ($crumbs) {
     $crumbs->push('Change', route('password.reset'));
 });
 
+Breadcrumbs::register('page', function ( $crumbs,  $path) {
+    if ($parent = $path->page->parent) {
+        $crumbs->parent('page', $path->withPage($path->page->parent));
+    } else {
+        $crumbs->parent('home');
+    }
+    $crumbs->push($path->page->title, route('page', $path));
+});
+
 //ADMIN Adverts
 
 Breadcrumbs::register('admin.home', function ( $crumbs) {
@@ -241,4 +250,30 @@ Breadcrumbs::register('adverts.index', function ( $crumbs, AdvertsPath $path = n
 Breadcrumbs::register('adverts.show', function ( $crumbs, Advert $advert) {
     $crumbs->parent('adverts.index', adverts_path($advert->region, $advert->category));
     $crumbs->push($advert->title, route('adverts.show', $advert));
+});
+
+// Pages
+
+Breadcrumbs::register('admin.pages.index', function ($crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Pages', route('admin.pages.index'));
+});
+
+Breadcrumbs::register('admin.pages.create', function ($crumbs) {
+    $crumbs->parent('admin.pages.index');
+    $crumbs->push('Create', route('admin.pages.create'));
+});
+
+Breadcrumbs::register('admin.pages.show', function ($crumbs,  $page) {
+    if ($parent = $page->parent) {
+        $crumbs->parent('admin.pages.show', $parent);
+    } else {
+        $crumbs->parent('admin.pages.index');
+    }
+    $crumbs->push($page->title, route('admin.pages.show', $page));
+});
+
+Breadcrumbs::register('admin.pages.edit', function ( $crumbs,  $page) {
+    $crumbs->parent('admin.pages.show', $page);
+    $crumbs->push('Edit', route('admin.pages.edit', $page));
 });

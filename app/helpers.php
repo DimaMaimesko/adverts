@@ -3,6 +3,7 @@
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Http\Router\AdvertsPath;
+use App\Models\Pages\Page;
 use App\Http\Router\PagePath;
 
 if (! function_exists('adverts_path')) {
@@ -12,5 +13,14 @@ if (! function_exists('adverts_path')) {
         return app()->make(AdvertsPath::class)
             ->withRegion($region)
             ->withCategory($category);
+    }
+
+    if (! function_exists('page_path')) {
+
+        function page_path(Page $page)
+        {
+            return app()->make(PagePath::class)
+                ->withPage($page);
+        }
     }
 }

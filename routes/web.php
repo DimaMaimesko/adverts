@@ -84,8 +84,15 @@ Route::group(
             Route::post('/reject/{advert}', 'AdvertsController@reject')->name('reject');
 
         });
-
-
+        Route::resource('pages', 'PagesController');
+        Route::group(['prefix' => 'pages/{page}', 'as' => 'pages.'], function () {
+            Route::post('/first', 'PagesController@first')->name('first');
+            Route::post('/up',    'PagesController@up')->name('up');
+            Route::post('/down',  'PagesController@down')->name('down');
+            Route::post('/last',  'PagesController@last')->name('last');
+        });
 
     }
 );
+
+Route::get('/{page_path?}', 'PageController@show')->name('page')->where('page_path', '.+');
