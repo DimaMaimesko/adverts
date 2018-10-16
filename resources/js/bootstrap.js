@@ -12,6 +12,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    //sumernote WYSIWIG redactor
+    require('summernote/dist/summernote-bs4');
 } catch (e) {}
 
 /**
