@@ -51,6 +51,7 @@ class PagesController extends Controller
 
     public function show(Page $page)
     {
+
         return view('admin.pages.show', compact('page'));
     }
 
@@ -60,11 +61,11 @@ class PagesController extends Controller
         $mdash = html_entity_decode('&mdash; ');
         $pageDepth = "";
         $pages = Page::defaultOrder()->withDepth()->get();
-        foreach ($pages as $key => $page){
-            for ($i = 0; $i <= $page->depth; $i++){
+        foreach ($pages as $key => $item){
+            for ($i = 0; $i <= $item->depth; $i++){
                 $pageDepth = $pageDepth . $mdash;
             }
-            $parents[$page->id] = $pageDepth . $page->menu_title;
+            $parents[$item->id] = $pageDepth . $item->menu_title;
             $pageDepth = "";
         }
         return view('admin.pages.edit',[

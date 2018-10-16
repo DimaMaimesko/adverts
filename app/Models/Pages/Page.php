@@ -30,11 +30,12 @@ class Page extends Model
         return implode('/', array_merge($this->ancestors()->defaultOrder()->pluck('slug')->toArray(), [$this->slug]));
     }
 
-    public function parentAttributes(): array
-    {
-        return $this->parent ? $this->parent->allAttributes() : [];
-    }
 
+
+    public function getMenuTitle(): string
+    {
+        return $this->menu_title ?: $this->title;
+    }
 
 
 }

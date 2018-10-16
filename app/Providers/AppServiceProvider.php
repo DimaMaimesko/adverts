@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use Laravel\Passport\Passport;
+use App\Models\Pages\Page;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -17,7 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('layouts.app', function($view){
+            $view->with('menuPages', Page::whereIsRoot()->defaultOrder()->getModels());
+        });
+
     }
 
     /**

@@ -45,12 +45,22 @@ $(document).on('click', '.location-button', function () {
     }
 });
 
-$(document).ready(function() {
-    $('.summernote').summernote({
-        height: 300
-    });
-
+$('.summernote').summernote({
+    height: 300,
+    callbacks: {    //здесь можно переопределять обработчики событий самернота
+        onImageUpload: function(files) {    //переопределим работу с изображениями, в files попадают выбранные файлы
+            console.log('hello');
+            var editor = $(this);   //получили нашу textarea
+            var url = editor.data('image-url'); //извлекаем URL из textarea
+            var data = new FormData();  //FormData() - обьект для хранениея данных формы в JS
+            data.append('file', files[0]);
+            axios.post(url, data).then(function(response) {
+                editor.summernote('insertImage', response.data);
+            }).catch(function (error) {
+                    console.error(error);
+                });
+        }
+    }
 });
-
 
 
