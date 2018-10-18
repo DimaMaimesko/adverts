@@ -45,6 +45,10 @@ Route::group(
         Route::post('/favorites/{advert}', 'FavoriteController@add')->name('favorites.add');
         Route::delete('/favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
 
+        Route::resource('tickets', 'TicketController')->only(['index', 'show', 'create', 'store', 'destroy']);
+        Route::post('tickets/{ticket}/message', 'TicketController@message')->name('tickets.message');
+
+
 
     }
 );
@@ -90,6 +94,18 @@ Route::group(
             Route::post('/up',    'PagesController@up')->name('up');
             Route::post('/down',  'PagesController@down')->name('down');
             Route::post('/last',  'PagesController@last')->name('last');
+        });
+
+        Route::group(['prefix' => 'tickets', 'as' => 'tickets.'], function () {
+            Route::get('/', 'TicketController@index')->name('index');
+            Route::get('/{ticket}/show', 'TicketController@show')->name('show');
+            Route::get('/{ticket}/edit', 'TicketController@editForm')->name('edit');
+            Route::put('/{ticket}/edit', 'TicketController@edit');
+            Route::post('{ticket}/message', 'TicketController@message')->name('message');
+            Route::post('/{ticket}/close', 'TicketController@close')->name('close');
+            Route::post('/{ticket}/approve', 'TicketController@approve')->name('approve');
+            Route::post('/{ticket}/reopen', 'TicketController@reopen')->name('reopen');
+            Route::delete('/{ticket}/destroy', 'TicketController@destroy')->name('destroy');
         });
 
     }
