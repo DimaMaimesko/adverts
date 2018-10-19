@@ -7,7 +7,7 @@ use App\Models\Tickets\Ticket;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tickets\EditRequest;
 use App\Http\Requests\Tickets\MessageRequest;
-use App\UseCases\Tickets\TicketService;
+use App\Services\Tickets\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +41,7 @@ class TicketController extends Controller
 
         $statuses = Status::statusesList();
 
-        return view('admin.tickets.index', compact('tickets', 'statuses'));
+        return view('admin.tickets.index', compact(['tickets', 'statuses']));
     }
 
     public function show(Ticket $ticket)
@@ -54,7 +54,7 @@ class TicketController extends Controller
         return view('admin.tickets.edit', compact('ticket'));
     }
 
-    public function edit(EditRequest $request, Ticket $ticket)
+    public function update(EditRequest $request, Ticket $ticket)
     {
         try {
             $this->service->edit($ticket->id, $request);
@@ -73,7 +73,7 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.tickets.show', $ticket);
+        return redirect()->route('admin.tickets.show', $ticket);
     }
 
 

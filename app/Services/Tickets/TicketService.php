@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases\Tickets;
+namespace App\Services\Tickets;
 
 use App\Models\Tickets\Ticket;
 use App\Http\Requests\Tickets\CreateRequest;

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Adverts\Advert\Dialog\Dialog;
 /**
  * @property int $id
  * @property int $user_id
@@ -50,6 +51,11 @@ class Advert extends Model
         'published_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
+
+    public function dialogs()
+    {
+        return $this->hasMany(Dialog::class, 'advert_id', 'id');
+    }
 
     public function user()
     {
@@ -188,6 +194,52 @@ class Advert extends Model
         }
         return null;
     }
+////////////////////////////////////////////////////////////////////////////////
+    public function writeClientMessage(int $fromId, string $message): void
+    {
+        $this->getOrCreateDialogWith($fromId)->writeMessageByClient($message);
+    }
+
+    private function getOrCreateDialogWith(int $fromId): Dialog
+    {
+        if ($fromId === $this->user_id) { throw new \DomainException('Cannot send message to myself.');}
+        return $this->dialogs()->firstOrCreate([
+            'owner_id' => $this->user_id,
+            'client_id' => $fromId,
+        ]);
+    }
+
+    public function writeOwnerMessage(int $toId, string $message): void
+    {
+        $this->getDialogWith($toId)->writeMessageByOwner($this->user_id, $message);
+    }
+
+    private function getDialogWith(int $userId): Dialog
+    {
+        $dialog = $this->dialogs()->where([
+            'user_id' => $this->user_id,
+            'client_id' => $userId,
+        ])->first();
+        if (!$dialog) {
+            throw new \DomainException('Dialog is not found.');
+        }
+        return $dialog;
+    }
+
+    public function readClientMessages(int $userId): void
+    {
+        $this->getDialogWith($userId)->readByClient();
+    }
+
+    public function readOwnerMessages(int $userId): void
+    {
+        $this->getDialogWith($userId)->readByOwner();
+    }
+
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@ use App\Models\Tickets\Ticket;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tickets\CreateRequest;
 use App\Http\Requests\Tickets\MessageRequest;
-use App\UseCases\Tickets\TicketService;
+use App\Services\Tickets\TicketService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 

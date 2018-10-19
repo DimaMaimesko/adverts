@@ -127,6 +127,46 @@
                         <button class="btn btn-info"><span class="fa fa-star"></span> Add to Favorites</button>
                     </form>
                 @endif
+                {{--<form method="GET" action="{{ route('cabinet.messages.showForm', $advert) }}" class="mr-1">--}}
+                    {{--@csrf--}}
+                    {{--<button class="btn btn-secondary"><span class="fa fa-subway"></span> Send Message To Owner</button>--}}
+                {{--</form>--}}
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Send Message To Owner
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Send message to {{$advert->user->name}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{{ route('cabinet.messages.send', $advert) }}" class="mr-1">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="message" class="col-form-label">Message: </label>
+                                        <textarea id="message" class="form-control" name="message" rows="5" placeholder="Message about {{"\"".$advert->title."\""}}" required></textarea>
+                                    </div>
+                                    <button class="btn btn-secondary"><span class="fa fa-subway"></span> Send </button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <hr/>

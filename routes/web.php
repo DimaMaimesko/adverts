@@ -48,9 +48,21 @@ Route::group(
         Route::resource('tickets', 'TicketController')->only(['index', 'show', 'create', 'store', 'destroy']);
         Route::post('tickets/{ticket}/message', 'TicketController@message')->name('tickets.message');
 
+        Route::group(['prefix' => 'messages', 'namespace' => 'Messages', 'as' => 'messages.'], function () {
+            Route::get('/index', 'MessagesController@index')->name('index');
+            Route::get('/show/{dialog}', 'MessagesController@show')->name('show');
+            Route::post('/reply/{dialog}', 'MessagesController@reply')->name('reply');
+            Route::post('/send/{advert}', 'MessagesController@send')->name('send');
+//            Route::get('/show/{advert}', 'AdvertsController@show')->name('show');
+//            Route::post('/moderate/{advert}', 'AdvertsController@moderate')->name('moderate');
+//            Route::post('/reject/{advert}', 'AdvertsController@reject')->name('reject');
+
+        });
 
 
     }
+
+
 );
 
 Route::group(
@@ -86,7 +98,6 @@ Route::group(
             Route::get('/show/{advert}', 'AdvertsController@show')->name('show');
             Route::post('/moderate/{advert}', 'AdvertsController@moderate')->name('moderate');
             Route::post('/reject/{advert}', 'AdvertsController@reject')->name('reject');
-
         });
         Route::resource('pages', 'PagesController');
         Route::group(['prefix' => 'pages/{page}', 'as' => 'pages.'], function () {
@@ -100,13 +111,16 @@ Route::group(
             Route::get('/', 'TicketController@index')->name('index');
             Route::get('/{ticket}/show', 'TicketController@show')->name('show');
             Route::get('/{ticket}/edit', 'TicketController@editForm')->name('edit');
-            Route::put('/{ticket}/edit', 'TicketController@edit');
+            Route::put('/{ticket}/update', 'TicketController@update')->name('update');
             Route::post('{ticket}/message', 'TicketController@message')->name('message');
             Route::post('/{ticket}/close', 'TicketController@close')->name('close');
             Route::post('/{ticket}/approve', 'TicketController@approve')->name('approve');
             Route::post('/{ticket}/reopen', 'TicketController@reopen')->name('reopen');
             Route::delete('/{ticket}/destroy', 'TicketController@destroy')->name('destroy');
         });
+
+
+
 
     }
 );
