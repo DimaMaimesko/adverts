@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Models\Adverts\Advert;
+use App\Notifications\StatusChangedNotification;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Advert\AdvertService;
 use App\Http\Requests\Adverts\RejectRequest;
@@ -20,7 +21,7 @@ class AdvertsController extends Controller
 
     public function index()
     {
-        $adverts = Advert::myAdverts()->paginate(10);
+        $adverts = Advert::latest()->paginate(20);
         return view('admin.adverts.home', [
             'adverts' => $adverts,
         ]);
@@ -48,6 +49,8 @@ class AdvertsController extends Controller
     {
         $advert = Advert::find($advert);
         $advert->update($request->input());
+
+
         return redirect()->route('cabinet.adverts.home')->with('success', 'Advert successfully updated');
     }
 
@@ -62,6 +65,8 @@ class AdvertsController extends Controller
     {
       $advert = Advert::find($advert);
       $advert->moderate(now());
+        $advert->user->notify(new StatusChangedNotification($advert->status, $advert->title));
+
       return redirect()->route('admin.adverts.index')->with('success', 'Advert is activated!');
     }
 

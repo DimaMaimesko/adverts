@@ -10,6 +10,7 @@ namespace App\Services\Profile;
 
 
 use App\Http\Requests\Users\ProfileEditValidation;
+use App\Models\User;
 
 class ProfileService
 {
