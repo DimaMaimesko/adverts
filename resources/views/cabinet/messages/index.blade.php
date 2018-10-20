@@ -19,10 +19,8 @@
         @foreach ($dialogs as $dialog)
 
             <tr>
-                <td>{{ $dialog->advert->title }}</td>
+                <td><a href="{{ route('adverts.show', $dialog->advert->id) }}">{{ $dialog->advert->title }}</a></td>
                 <td>{{ $dialog->client->name }}</td>
-                {{--<td><a href="{{ route('admin.tickets.show', $ticket) }}" target="_blank">{{ $ticket->subject }}</a></td>--}}
-
                 <td>
                     @if($dialog->owner_id == Auth::id())
                         @if ($dialog->user_new_messages > 0)

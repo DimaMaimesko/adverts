@@ -2,10 +2,13 @@
 namespace App\Http\Controllers\Cabinet\Messages;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MessageNotifier;
 use App\Models\Adverts\Advert;
 use App\Models\Adverts\Advert\Dialog\Dialog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 class MessagesController extends Controller
 {
 
@@ -15,13 +18,16 @@ class MessagesController extends Controller
         return view('cabinet.messages.index', [
             'dialogs' => $dialogs,
         ]);
-
     }
 
     public function send($advert, Request $request)
     {
         $advert = Advert::find($advert);
         $advert->writeClientMessage( Auth::id(),  $request->input('message'));
+
+        Mail::to($advert->user->email)
+            ->send(new MessageNotifier(Auth::id(),$request->input('message')));
+
         return back();
     }
 

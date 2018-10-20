@@ -39,7 +39,7 @@
             <label for="content" class="col-form-label">Content</label>
             <textarea id="content"
                       class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}   summernote"
-                      data-image-url="{{ route('admin.ajax.upload.image') }}"
+                      {{--data-image-url="{{ route('admin.ajax.upload.image') }}"--}}
                       name="content"
                       rows="10"
                       required>
