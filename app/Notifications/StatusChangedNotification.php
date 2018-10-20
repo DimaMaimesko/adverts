@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\NexmoMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -34,7 +35,7 @@ class StatusChangedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'nexmo'];
+        return ['mail', 'nexmo', 'slack'];
     }
 
     /**
@@ -57,6 +58,12 @@ class StatusChangedNotification extends Notification
         return (new NexmoMessage)
                     ->content('The status of' . $this->advertTitle . 'is ' . $this->advertStatus . ' now.')
                     ->unicode();
+    }
+
+    public function toSlack($notifiable)
+    {
+        return (new SlackMessage)
+                    ->content('The status of' . $this->advertTitle . 'is ' . $this->advertStatus . ' now.');
     }
 
     /**

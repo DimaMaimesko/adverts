@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->phone;
     }
 
+    public function routeNotificationForSlack($notification = null)
+    {
+        return env('SLACK_WEBHOOK');
+    }
+
     public static function rolesList(): array
     {
         return [
