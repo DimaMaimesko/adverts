@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -33,7 +34,7 @@ class StatusChangedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'nexmo'];
     }
 
     /**
@@ -45,10 +46,17 @@ class StatusChangedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The status of' . $this->advertTitle)
+                    ->line('The status of ' . $this->advertTitle)
                     ->line(' is ' . $this->advertStatus . ' now.')
                     ->action('Watch it!', route('cabinet.adverts.home'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toNexmo($notifiable)
+    {
+        return (new NexmoMessage)
+                    ->content('The status of' . $this->advertTitle . 'is ' . $this->advertStatus . ' now.')
+                    ->unicode();
     }
 
     /**

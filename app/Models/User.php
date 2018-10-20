@@ -53,6 +53,11 @@ class User extends Authenticatable
         'phone_verify_token_expire' => 'datetime',
     ];
 
+    public function routeNotificationForNexmo($notification = null)
+    {
+        return $this->phone;
+    }
+
     public static function rolesList(): array
     {
         return [

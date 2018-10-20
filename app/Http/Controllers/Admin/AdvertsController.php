@@ -65,7 +65,7 @@ class AdvertsController extends Controller
     {
       $advert = Advert::find($advert);
       $advert->moderate(now());
-        $advert->user->notify(new StatusChangedNotification($advert->status, $advert->title));
+      $advert->user->notify(new StatusChangedNotification($advert->status, $advert->title));
 
       return redirect()->route('admin.adverts.index')->with('success', 'Advert is activated!');
     }
