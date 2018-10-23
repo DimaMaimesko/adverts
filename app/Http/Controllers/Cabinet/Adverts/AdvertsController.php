@@ -3,10 +3,7 @@ namespace App\Http\Controllers\Cabinet\Adverts;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Models\Adverts\Advert;
-use Illuminate\Support\Facades\Auth;
 use App\Services\Advert\AdvertService;
-
-use Illuminate\Support\Facades\Request;
 
 class AdvertsController extends Controller
 {
@@ -19,7 +16,7 @@ class AdvertsController extends Controller
 
     public function index()
     {
-        $adverts = Advert::myAdverts()->paginate(10);
+        $adverts = Advert::myAdverts()->with('photos')->paginate(10);
         return view('cabinet.adverts.home', [
             'adverts' => $adverts,
         ]);

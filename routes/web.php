@@ -40,6 +40,7 @@ Route::group(
 
         Route::get('/adverts/edit/{advert}', 'Adverts\AdvertsController@edit')->name('adverts.edit');
         Route::post('/adverts/update/{advert}', 'Adverts\AdvertsController@update')->name('adverts.update');
+        Route::post('/adverts/upload/{advert}', 'Adverts\PhotosController@uploadFiles')->name('adverts.upload');
 
         Route::get('/favorites', 'FavoriteController@index')->name('favorites.home');
         Route::post('/favorites/{advert}', 'FavoriteController@add')->name('favorites.add');

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Adverts\Advert\Dialog\Dialog;
+use App\Models\Adverts\Advert\Photo;
 /**
  * @property int $id
  * @property int $user_id
@@ -77,10 +78,10 @@ class Advert extends Model
         return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
-//    public function photos()
-//    {
-//        return $this->hasMany(Photo::class, 'advert_id', 'id');
-//    }
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'advert_id', 'id');
+    }
 
 
     public function isDraft(): bool

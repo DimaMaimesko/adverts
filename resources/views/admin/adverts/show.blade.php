@@ -108,4 +108,5 @@
         </div>
 
     </div>
+@include('cabinet.adverts.photos.index')
 @endsection

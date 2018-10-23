@@ -112,5 +112,7 @@
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
+    @include('cabinet.adverts.photos.form')
+    @include('cabinet.adverts.photos.index')
 
 @endsection

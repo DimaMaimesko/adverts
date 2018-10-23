@@ -21,7 +21,7 @@ class AdvertsController extends Controller
 
     public function index()
     {
-        $adverts = Advert::latest()->paginate(20);
+        $adverts = Advert::latest()->with('photos')->paginate(20);
         return view('admin.adverts.home', [
             'adverts' => $adverts,
         ]);
