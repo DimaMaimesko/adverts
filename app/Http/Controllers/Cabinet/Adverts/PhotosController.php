@@ -17,7 +17,8 @@ class PhotosController extends Controller
         Storage::makeDirectory($pathToStorage);
         foreach ($files as $file){
             $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs($pathToStorage, $filename, 's3', 'public');
+            $path = $file->storeAs($pathToStorage, $filename, 's3');
+            Storage::disk('s3')->setVisibility($path, 'public');
             $url = Storage::disk('s3')->url($path);
             //$pathToDb = 'storage/adverts/' . $advert . '/' . $filename;
             $pathToDb = $url;
