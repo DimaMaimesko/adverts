@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Adverts\Advert\Photo;
 use  App\Http\Requests\Adverts\PhotosRequest;
-
+//use Intervention\Image\ImageManagerStatic as Image;
 class PhotosController extends Controller
 {
 
@@ -17,8 +17,10 @@ class PhotosController extends Controller
         Storage::makeDirectory($pathToStorage);
         foreach ($files as $file){
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs($pathToStorage, $filename);
-            $pathToDb = 'storage/adverts/' . $advert . '/' . $filename;
+            $path = $file->storeAs($pathToStorage, $filename, 's3', 'public');
+            $url = Storage::disk('s3')->url($path);
+            //$pathToDb = 'storage/adverts/' . $advert . '/' . $filename;
+            $pathToDb = $url;
             Photo::create([
                 'advert_id' => $advert,
                 'photo' => $pathToDb,
