@@ -1,4 +1,8 @@
 <?php
+Route::get('api/github/{username}', 'Api\ApiController@github')->name('githubuser');
+Route::get('api/darksky/{lat}/{lon}', 'Api\ApiController@darksky')->name('darkskyweather');
+Route::get('api/weather/form/{weatherObject?}', 'Api\ApiController@showForm')->name('weather.index');
+Route::post('api/weather/getWeather', 'Api\ApiController@getWeather')->name('weather.get');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');

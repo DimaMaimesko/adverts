@@ -5,5 +5,6 @@
     <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.adverts.create.category') }}">Create Advert</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.messages.index') }}">Messages</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('weather.index') }}">Weather</a></li>
 
 </ul>
