@@ -83,7 +83,13 @@ Route::group(
         Route::resource('permissions', 'PermissionsController');
         Route::resource('roles', 'RolesController');
         Route::get('regions/sub/{parent_id}', 'RegionsController@createsubregion')->name('subregion');
+
+        Route::get('regions/search', 'RegionsController@search')->name('regions.search');
+
         Route::resource('regions', 'RegionsController');
+
+
+
         Route::group(['prefix' => 'regions/{region}', 'as' => 'regions.'], function () {
             Route::post('/first', 'RegionsController@first')->name('first');
             Route::post('/up',    'RegionsController@up')->name('up');

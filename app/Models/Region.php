@@ -11,11 +11,26 @@
  * @method Builder roots()
  */
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Region extends Model
 {
+    use Searchable;
+
+    public function searchableAs()
+    {
+        return 'regions';
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+        return $array;
+    }
+
     protected $fillable = ['name','slug','parent_id','sort'];
 
     public function parent(){

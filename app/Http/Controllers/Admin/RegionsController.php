@@ -20,6 +20,22 @@ class RegionsController extends Controller
         $regions = Region::where('parent_id',null)->orderBy('sort')->with('parent')->paginate(self::REGIONS_FOR_PAGINATION);
         return view('admin.regions.index',[
             'regions' => $regions,
+            'counted' => isset($counted) ? $counted : "",
+        ]);
+
+    }
+
+    public function search(Request $request)
+    {
+        if (isset($request->text)){
+            $regions = Region::search($request->text)->paginate(self::REGIONS_FOR_PAGINATION);
+            $counted = $regions->total();
+        }else{
+            $regions = Region::where('parent_id',null)->orderBy('sort')->with('parent')->paginate(self::REGIONS_FOR_PAGINATION);
+        }
+        return view('admin.regions.index',[
+            'regions' => $regions,
+            'counted' => isset($counted) ? $counted : "",
         ]);
 
     }

@@ -2,6 +2,8 @@
 
 @section('content')
     @include('admin.regions._nav')
+
+
     <div class="row">
         <div class="col-6 col-md-8 col-lg-10">
         </div>
@@ -14,7 +16,7 @@
             </p>
         </div>
     </div>
-
+    @include('layouts.elements.searchforregions')
     <table class="table table-bordered table-striped">
         <thead>
         <tr>

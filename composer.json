@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
+        "algolia/algoliasearch-client-php": "^1.27",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "doctrine/dbal": "^2.8",
         "elasticsearch/elasticsearch": "^6.0",
@@ -16,6 +17,7 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
+        "laravel/scout": "^6.0",
         "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
