@@ -11,6 +11,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
+use Log;
+use App\Jobs\SendRegisterEmail;
 
 class RegisterController extends Controller
 {
@@ -41,8 +43,14 @@ class RegisterController extends Controller
             'verify_token' => Str::random(16),
             'status' => User::STATUS_WAIT,
         ]);
-
+        Log::info("Request without Queues START");
         Mail::to($user->email)->send(new VerifyMail($user));
+        Log::info("Request without Queues STOP");
+
+        Log::info("Request with Queues START");
+        SendRegisterEmail::dispatch($user);
+        Log::info("Request with Queues STOP");
+
         return $user;
     }
 
