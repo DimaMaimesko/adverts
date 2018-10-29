@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Router\AdvertsPath;
 use App\Services\Advert\AdvertService;
 use App\Services\Search\SearchService;
+use App\Events\MessageSended;
+
 class AdvertsController extends Controller
 {
     private $service;
@@ -41,6 +43,8 @@ class AdvertsController extends Controller
         $categoriesCounts = $result->categoriesCounts;
         $user = Auth::user();
 
+
+
         return view('adverts.index', compact([
             'category', 'region',
             'regionsCounts', 'categoriesCounts',
@@ -54,6 +58,9 @@ class AdvertsController extends Controller
         //dump(Auth::user()->hasPermissionTo('edit admins'));
         $advert = Advert::find($advert->id);
         $user = Auth::user();
+
+
+
         return view('adverts.show', [
             'advert' => $advert,
             'user' => $user,

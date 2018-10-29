@@ -7,6 +7,11 @@
 
 require('./bootstrap');
 
+window.Vue = require('vue');
+
+
+
+
 
 $('#flash-overlay-modal').modal();
 

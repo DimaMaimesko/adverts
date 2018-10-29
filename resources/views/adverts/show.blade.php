@@ -66,6 +66,15 @@
     <div class="row">
         <div class="col-md-9">
 
+            <div class="alert alert-info">
+                @{{ count }} people are looking this advert right now.
+                <ul>
+                    <li v-for="viewer in viewers">
+                        Id: @{{ viewer.id }}: @{{ viewer.name }},  @{{ viewer.email }}
+                    </li>
+                </ul>
+            </div>
+
             <p class="float-right" style="font-size: 36px;">{{ $advert->price }}</p>
             <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
             <p>
@@ -243,3 +252,38 @@
         {{--}--}}
     {{--</script>--}}
 {{--@endsection--}}
+@section('scripts')
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                viewers: [],
+                count: 0
+            },
+            mounted(){
+                this.listen();
+                console.log(('advert.' + '{{$advert->id}}'));
+            },
+            methods: {
+                listen() {
+                    Echo.join('advert.' + '{{$advert->id}}')
+                        .here((users) => {
+                            this.count = users.length;
+                            this.viewers = users;
+                        })
+                        .joining((user) => {
+                            this.count++;
+                            this.viewers.push(user);
+                        })
+                        .leaving((user) => {
+                            this.count--;
+                            _.pullAllBy(this.viewers, [user]);
+                        })
+                    // .listen()
+                }
+            }
+        })
+    </script>
+
+
+@endsection

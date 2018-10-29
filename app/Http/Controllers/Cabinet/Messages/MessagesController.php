@@ -8,6 +8,7 @@ use App\Models\Adverts\Advert\Dialog\Dialog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Events\MessageSended;
 
 class MessagesController extends Controller
 {
@@ -27,6 +28,8 @@ class MessagesController extends Controller
 
         Mail::to($advert->user->email)
             ->send(new MessageNotifier(Auth::id(),$request->input('message')));
+
+        MessageSended::dispatch($request->input('message'), $advert);
 
         return back();
     }

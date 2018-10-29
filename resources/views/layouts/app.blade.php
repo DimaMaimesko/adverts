@@ -12,7 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -21,7 +21,8 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body id="app">
+<body>
+<div  id="app">
 <header>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
@@ -136,7 +137,9 @@
         </div>
     </div>
 </footer>
-
+</div>
+<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/broadcast.js') }}"></script>
 {{--Scripts--}}
 @yield('scripts')
 

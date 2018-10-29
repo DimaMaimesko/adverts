@@ -14,8 +14,9 @@ let webpack = require('webpack');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/broadcast.js', 'public/js/broadcast.js')
    .sass('resources/sass/app.scss', 'public/css')
-    .version();
+   .version();
 
 mix.webpackConfig({
     plugins: [
