@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Adverts\Advert\Dialog\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 /**
  * @property int $id
  * @property int $advert_id
@@ -32,7 +33,7 @@ class Dialog extends Model
             'dialog_id' => $this->id,
             'message' => $message,
         ]);
-        $this->client_new_messages++;
+        $this->user_new_messages++;
         $this->save();
     }
 
@@ -43,18 +44,18 @@ class Dialog extends Model
             'dialog_id' => $this->id,
             'message' => $message,
         ]);
-        $this->user_new_messages++;
+        $this->client_new_messages++;
         $this->save();
     }
 
     public function readByOwner(): void
     {
-        $this->update(['user_new_messages' => 0]);
+        $this->update(['client_new_messages' => 0]);
     }
 
     public function readByClient(): void
     {
-        $this->update(['client_new_messages' => 0]);
+        $this->update(['user_new_messages' => 0]);
     }
 
     public function client()
@@ -80,5 +81,14 @@ class Dialog extends Model
     public function scopeMyDialogs(Builder $query)
     {
         return  $query->where('owner_id', Auth::id())->orWhere('client_id', Auth::id());
+    }
+
+    public static function countNewMessages(LengthAwarePaginator $dialogs)
+    {
+        $counter = 0;
+        foreach ($dialogs as $item){
+            $counter = $counter + $item->client_new_messages;
+        }
+        return $counter;
     }
 }

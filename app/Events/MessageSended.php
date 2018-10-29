@@ -15,17 +15,17 @@ class MessageSended implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-    public $advert;
+    public $owner;
+    public $count;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, Advert $advert)
+    public function __construct($owner,  $count)
     {
-        $this->message = $message;
-        $this->advert = $advert;
+        $this->owner = $owner;
+        $this->count = $count;
     }
 
     /**
@@ -35,7 +35,7 @@ class MessageSended implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('messages-chanel');
+        //return new PresenceChannel('count.' . $this->owner . '.messages');
         //return new PrivateChannel('channel-name');
     }
 }

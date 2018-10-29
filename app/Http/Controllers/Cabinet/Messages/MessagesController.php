@@ -16,8 +16,10 @@ class MessagesController extends Controller
     public function index()
     {
         $dialogs = Dialog::myDialogs()->paginate(10);
+        $counter = Dialog::countNewMessages($dialogs);
         return view('cabinet.messages.index', [
             'dialogs' => $dialogs,
+            'counter' => $counter,
         ]);
     }
 
@@ -28,8 +30,6 @@ class MessagesController extends Controller
 
         Mail::to($advert->user->email)
             ->send(new MessageNotifier(Auth::id(),$request->input('message')));
-
-        MessageSended::dispatch($request->input('message'), $advert);
 
         return back();
     }

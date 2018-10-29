@@ -23,16 +23,16 @@
                 <td>{{ $dialog->client->name }}</td>
                 <td>
                     @if($dialog->owner_id == Auth::id())
-                        @if ($dialog->user_new_messages > 0)
-                            <span class="badge badge-danger">{{$dialog->user_new_messages}}</span>
+                        @if ($dialog->client_new_messages > 0)
+                            <span class="badge badge-danger">{{$dialog->client_new_messages}}</span>
                         @else
-                            <span class="badge badge-secondary">{{$dialog->user_new_messages}}</span>
+                            <span class="badge badge-secondary">{{$dialog->client_new_messages}}</span>
                         @endif
                     @elseif($dialog->client_id == Auth::id())
-                        @if($dialog->client_new_messages > 0)
-                             <span class="badge badge-danger">{{$dialog->client_new_messages}}</span>
+                        @if($dialog->user_new_messages > 0)
+                             <span class="badge badge-danger">{{$dialog->user_new_messages}}</span>
                         @else
-                             <span class="badge badge-secondary">{{$dialog->client_new_messages}}</span>
+                             <span class="badge badge-secondary">{{$dialog->user_new_messages}}</span>
                         @endif
                     @endif
                 </td>
