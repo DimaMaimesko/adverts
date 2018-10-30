@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.tickets._nav')
 
     <p><a href="{{ route('cabinet.tickets.create') }}" class="btn btn-success">Add Ticket</a></p>
 

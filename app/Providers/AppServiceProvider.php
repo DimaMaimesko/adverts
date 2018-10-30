@@ -9,6 +9,8 @@ use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use Laravel\Passport\Passport;
 use App\Models\Pages\Page;
+use App\Services\Banners\CostCalculator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.app', function($view){
             $view->with('menuPages', Page::whereIsRoot()->defaultOrder()->getModels());
+        });
+
+        $this->app->singleton(CostCalculator::class, function ($app) {
+            $config = $app->make('config')->get('banner');
+            return new CostCalculator($config['price']);
         });
 
     }

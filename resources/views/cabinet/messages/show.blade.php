@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.messages._nav')
 
 
     @foreach ($dialog->messages()->orderBy('created_at')->get() as $message)

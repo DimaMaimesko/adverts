@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.weather._nav')
 
     <form method="POST" action="{{ route('weather.get') }}">
         @csrf

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin._nav')
+    @include('admin.tickets._nav')
 
     <div class="card mb-3">
         <div class="card-header">Filter</div>

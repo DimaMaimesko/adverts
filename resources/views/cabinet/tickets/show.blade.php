@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.tickets._nav')
 
     <div class="d-flex flex-row mb-3">
         @if ($ticket->canBeRemoved())

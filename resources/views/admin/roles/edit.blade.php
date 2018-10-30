@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @include('admin._nav')
+    @include('admin.roles._nav')
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="col-md-3"></div>

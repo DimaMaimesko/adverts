@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.adverts.create._nav')
 
     <p>Choose category:</p>
 

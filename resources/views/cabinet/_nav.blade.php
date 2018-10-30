@@ -8,7 +8,8 @@
     <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.messages.index') }}">Messages  <span class="badge badge-danger">{{isset($counter) ? $counter : null }}</span></a></li>
     <li class="nav-item"><a class="nav-link" href="{{ route('weather.index') }}">Weather</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.banners.index') }}">Banners</a></li>
+
 
 </ul>
 
-<messages-component></messages-component>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin._nav')
+    @include('admin.adverts._nav')
     <table class="table table-bordered table-striped">
         <thead>
         <tr>

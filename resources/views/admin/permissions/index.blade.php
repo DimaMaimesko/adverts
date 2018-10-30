@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @include('admin._nav')
+    @include('admin.permissions._nav')
     <div class="row">
         <div class="col-6 col-md-8 col-lg-10">
         </div>

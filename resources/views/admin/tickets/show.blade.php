@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin._nav')
+    @include('admin.tickets._nav')
 
 
     <div class="d-flex flex-row mb-3">

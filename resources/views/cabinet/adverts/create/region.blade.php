@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav')
+    @include('cabinet.adverts.create._nav')
     <h5>Chosen category: {{$category->name}}</h5>
     <h5>Chosen region: {{$region ? $region->getAddress() : ""}}</h5>
     @if ($region)
