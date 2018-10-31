@@ -16,9 +16,18 @@ class InitCommand extends Command
     {
         parent::__construct();
         $this->client = $client;
+
+    }
+
+    public function handle(): bool
+    {
+        $this->initAdverts();
+        $this->initBanners();
+
+        return true;
     }
     
-    public function handle(): bool
+    public function initAdverts(): void
     {
         try {
             $this->client->indices()->delete([
@@ -123,9 +132,46 @@ class InitCommand extends Command
             ],
         ]);
 
-        return true;
     }
 
+    private function initBanners(): void
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners'
+            ]);
+        } catch (Missing404Exception $e) {
+        }
 
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'banner' => [
+                        '_source' => [
+                            'enabled' => true,
+                        ],
+                        'properties' => [
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'status' => [
+                                'type' => 'keyword',
+                            ],
+                            'format' => [
+                                'type' => 'keyword',
+                            ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
+                            'regions' => [
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
 }

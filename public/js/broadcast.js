@@ -69,18 +69,6 @@
 /***/ (function(module, exports) {
 
 
-// window.Echo.channel('messages-chanel')
-//     .listen('MessageSended', e => {
-//         //console.log('Message has been sent');
-//         console.log('Message: ' + e.message);
-//         console.log('For Advert: /"' + e.advert.title + '/"');
-//     })
-
-// window.Echo.channel('count.1.messages')
-//     .listen('MessageSended', e => {
-//         //console.log('Message has been sent');
-//         console.log('Message: ' + e.count);
-//     })
 
 /***/ }),
 

@@ -17,6 +17,10 @@ Route::get('/adverts/show/{advert}', 'Adverts\AdvertsController@show')->name('ad
 Route::get('/adverts/{adverts_path?}', 'Adverts\AdvertsController@index')->name('adverts.index')->where('adverts_path', '.+');
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');
+
+Route::get('/banner/get', 'BannerController@get')->name('banner.get');
+Route::get('/banner/{banner}/click', 'BannerController@click')->name('banner.click');
+
 Route::group(
     [
         'prefix' => 'cabinet',
