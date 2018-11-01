@@ -17,6 +17,7 @@
         "laracasts/flash": "^3.0",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.7.*",
+        "laravel/horizon": "^1.4",
         "laravel/passport": "^7.0",
         "laravel/scout": "^6.0",
         "laravel/socialite": "^3.1",
@@ -27,6 +28,7 @@
         "mews/purifier": "^2.1",
         "nexmo/client": "@beta",
         "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "^3.2",
         "rfd/imagemagick": "^1.4",
         "spatie/laravel-permission": "^2.20",
         "zircote/swagger-php": "2.0"
@@ -76,6 +78,10 @@
         ]
     },
     "config": {
+        "platform": {
+            "ext-pcntl": "7.1",
+            "ext-posix": "7.1"
+        },
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
